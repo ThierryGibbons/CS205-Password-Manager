@@ -26,6 +26,8 @@ export default {
       body: 'Poppins',
     },
     fontWeight: {
+      thin: '200',
+      light: '300',
       normal: '400',
       bold: '700',
     },
