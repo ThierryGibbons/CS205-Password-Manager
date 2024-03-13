@@ -11,6 +11,7 @@ export default {
       'primary': '#a6b5d5',
       'secondary': '#5e3169',
       'accent': '#b8699f',
+      'transparent': 'transparent',
      },
      fontSize: {
       sm: '0.750rem',
@@ -29,7 +30,9 @@ export default {
       thin: '200',
       light: '300',
       normal: '400',
+      medium: '500',
       bold: '700',
+      extraBold: '1000',
     },
     extend: {},
   },
