@@ -1,3 +1,5 @@
+import InteractiveText from "../components/InteractiveText";
+
 const GetStartedPage = () => {
   return (
     <>
@@ -7,7 +9,7 @@ const GetStartedPage = () => {
       >
         <div className="text-center">
           <h1 className="font-poppins font-extraBold text-3xl text-primary-default align-text-top pb-[15vh]">
-            Getting Started
+            <InteractiveText originalText={"Getting Started"} />
           </h1>
         </div>
         {/* Details */}
@@ -39,7 +41,7 @@ const GetStartedPage = () => {
               <button
                 className="absolute inset-y-0 right-0 px-4 text-text-default hover:text-accent-default text-3xl rounded-r-lg"
                 onClick={() => {
-                  //   Generate a random password
+                  // Generate a random password
                 }}
               >
                 ⚄
@@ -48,7 +50,11 @@ const GetStartedPage = () => {
           </div>
         </div>
         <h1 className="text-xl text-center row-start-4 whitespace-pre font-poppins font-medium text-primary-default">
-          <a href="#">{">>>          Sign Up          <<<"}</a>
+          <a href="#" className="inline-flex items-center justify-center">
+            {">>>          "}
+            <InteractiveText originalText={"Sign Up"} />
+            {"          <<<"}
+          </a>
         </h1>
       </div>
     </>
