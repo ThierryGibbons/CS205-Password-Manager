@@ -1,5 +1,3 @@
-import InteractiveText from "../components/InteractiveText";
-
 const GetStartedPage = () => {
   return (
     <>
@@ -9,7 +7,7 @@ const GetStartedPage = () => {
       >
         <div className="text-center">
           <h1 className="font-poppins font-extraBold text-3xl text-primary-default align-text-top pb-[15vh]">
-            <InteractiveText originalText={"Getting Started"} />
+            Getting Started
           </h1>
         </div>
         {/* Details */}
@@ -50,11 +48,7 @@ const GetStartedPage = () => {
           </div>
         </div>
         <h1 className="text-xl text-center row-start-4 whitespace-pre font-poppins font-medium text-primary-default">
-          <a href="#" className="inline-flex items-center justify-center">
-            {">>>          "}
-            <InteractiveText originalText={"Sign Up"} />
-            {"          <<<"}
-          </a>
+          <a href="/getstarted">{">>>          Sign Up          <<<"}</a>
         </h1>
       </div>
     </>

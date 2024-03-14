@@ -1,7 +1,6 @@
-// src/components/Navbar.tsx
-
 import React from "react";
 import { Link } from "react-router-dom";
+import InteractiveText from "./InteractiveText";
 
 const Navbar: React.FC = () => {
   return (
@@ -12,7 +11,9 @@ const Navbar: React.FC = () => {
             href="/"
             className="text-text-default hover:text-accent-default text-2xl font-bold font-Poppins"
           >
-            Passwords Made Easy
+            <InteractiveText originalText="Passwords" />{" "}
+            <InteractiveText originalText="Made" />{" "}
+            <InteractiveText originalText="Easy" />
           </a>
           <div>
             <a

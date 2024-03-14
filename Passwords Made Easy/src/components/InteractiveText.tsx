@@ -44,6 +44,6 @@ const InteractiveText: React.FC<{ originalText: string }> = ({
     };
   }, [originalText]);
 
-  return <p ref={headingRef}>{text}</p>;
+  return <span ref={headingRef}>{text}</span>;
 };
 export default InteractiveText;
