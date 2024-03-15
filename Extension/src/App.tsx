@@ -1,11 +1,45 @@
+import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import NavBar from "./components/Navbar";
+
+// Pages
+import PasswordPage from "./pages/password";
+import AlertPage from "./pages/alert";
+import AccountPage from "./pages/account";
 
 function App() {
   return (
     <>
-      <NavBar v="Password" />
-      <h1 className="font-Poppins font-bold p-18">Passwords Made Easy</h1>
+      {/* <NavBar v={path} /> */}
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <NavBar v="Password" />
+              <PasswordPage />
+            </>
+          }
+        />
+        <Route
+          path="/alert"
+          element={
+            <>
+              <NavBar v="Alert" />
+              <AlertPage />
+            </>
+          }
+        />
+        <Route
+          path="/account"
+          element={
+            <>
+              <NavBar v="Account" />
+              <AccountPage />
+            </>
+          }
+        />
+      </Routes>
     </>
   );
 }
