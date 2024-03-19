@@ -17,9 +17,9 @@ const ButtonPassword = ({ v }: { v: string }) => {
             />
           </svg>
 
-          <a className="text-text-default text-base font-bold font-Poppins">
+          <span className="text-text-default text-base font-bold font-Poppins">
             Passwords
-          </a>
+          </span>
         </div>
       </a>
     );
@@ -63,9 +63,9 @@ const ButtonAlert = ({ v }: { v: string }) => {
               clipRule="evenodd"
             />
           </svg>
-          <a className="text-text-default text-base font-bold font-Poppins">
+          <span className="text-text-default text-base font-bold font-Poppins">
             Alerts
-          </a>
+          </span>
         </div>
       </a>
     );
@@ -140,7 +140,7 @@ const NavBar = ({ v }: { v: string }) => {
   if (v == "Password") {
     return (
       <nav className="pb-4">
-        <div className="container mx-auto flex justify-between items-center gap-4">
+        <div className="container mx-auto flex justify-between items-center gap-2">
           <div className="hover:text-accent-400">
             <ButtonPassword v="full" />
           </div>
@@ -156,15 +156,15 @@ const NavBar = ({ v }: { v: string }) => {
   } else if (v == "Alert") {
     return (
       <nav className="pb-4">
-        <div className="container mx-auto flex justify-between items-center gap-4">
-          <div className="hover:text-accent-400">
-            <ButtonPassword v="half" />
-          </div>
+        <div className="container mx-auto flex justify-between items-center">
           <div className="hover:text-accent-400">
             <ButtonAlert v="full" />
           </div>
           <div className="hover:text-accent-400">
             <ButtonAccount v="half" />
+          </div>
+          <div className="hover:text-accent-400">
+            <ButtonPassword v="half" />
           </div>
         </div>
       </nav>
@@ -172,15 +172,15 @@ const NavBar = ({ v }: { v: string }) => {
   } else if (v == "Account") {
     return (
       <nav className="pb-4">
-        <div className="container mx-auto flex justify-between items-center gap-4">
+        <div className="container mx-auto flex justify-between items-center gap-2">
+          <div className="hover:text-accent-400">
+            <ButtonAccount v="full" />
+          </div>
           <div className="hover:text-accent-400">
             <ButtonPassword v="half" />
           </div>
           <div className="hover:text-accent-400">
             <ButtonAlert v="half" />
-          </div>
-          <div className="hover:text-accent-400">
-            <ButtonAccount v="full" />
           </div>
         </div>
       </nav>
