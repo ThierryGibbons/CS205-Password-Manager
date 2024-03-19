@@ -10,7 +10,6 @@ import AccountPage from "./pages/account";
 function App() {
   return (
     <>
-      {/* <NavBar v={path} /> */}
       <Routes>
         <Route
           path="/"
