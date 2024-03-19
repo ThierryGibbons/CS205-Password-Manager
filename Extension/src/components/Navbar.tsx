@@ -1,7 +1,7 @@
 const ButtonPassword = ({ v }: { v: string }) => {
   if (v == "full") {
     return (
-      <a href="/">
+      <a href="#">
         <div className="bg-background-900 p-4 mb-4 rounded-lg flex items-center gap-2">
           {/* lock svg */}
           <svg
@@ -25,7 +25,7 @@ const ButtonPassword = ({ v }: { v: string }) => {
     );
   } else if (v == "half") {
     return (
-      <a href="/">
+      <a href="#">
         <div className="bg-background-900 p-4 mb-4 rounded-lg flex items-center gap-2">
           {/* lock svg */}
           <svg
@@ -49,7 +49,7 @@ const ButtonPassword = ({ v }: { v: string }) => {
 const ButtonAlert = ({ v }: { v: string }) => {
   if (v == "full") {
     return (
-      <a href="/alert">
+      <a href="#alert">
         <div className="bg-background-900 p-4 mb-4 rounded-lg flex items-center gap-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -71,7 +71,7 @@ const ButtonAlert = ({ v }: { v: string }) => {
     );
   } else if (v == "half") {
     return (
-      <a href="/alert">
+      <a href="#alert">
         <div className="bg-background-900 p-4 mb-4 rounded-lg flex items-center gap-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -94,7 +94,7 @@ const ButtonAlert = ({ v }: { v: string }) => {
 const ButtonAccount = ({ v }: { v: string }) => {
   if (v == "full") {
     return (
-      <a href="/account">
+      <a href="#account">
         <div className="bg-background-900 p-4 mb-4 rounded-lg flex items-center gap-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -116,7 +116,7 @@ const ButtonAccount = ({ v }: { v: string }) => {
     );
   } else if (v == "half") {
     return (
-      <a href="/account">
+      <a href="#account">
         <div className="bg-background-900 p-4 mb-4 rounded-lg flex items-center gap-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
