@@ -6,6 +6,7 @@ import NavBar from "./components/Navbar";
 import PasswordPage from "./pages/password";
 import AlertPage from "./pages/alert";
 import AccountPage from "./pages/account";
+import PasswordView from "./pages/passwordView";
 
 function App() {
   return (
@@ -35,6 +36,15 @@ function App() {
             <>
               <NavBar v="Account" />
               <AccountPage />
+            </>
+          }
+        />
+        <Route
+          path="/pwdView"
+          element={
+            <>
+              <NavBar v="Password" />
+              <PasswordView />
             </>
           }
         />
