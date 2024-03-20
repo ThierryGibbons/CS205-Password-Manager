@@ -7,7 +7,7 @@ const HomePage = () => {
         className="grid grid-rows-6 grid-flow-col"
         style={{ height: `calc(100vh - 192px)` }}
       >
-        <div className="row-span-2 w-[80ch] m-auto">
+        <div className="row-span-2 w-[80ch] m-auto row-start-2">
           <h1 className="font-poppins font-extraBold text-3xl text-center">
             <InteractiveText originalText="MAKING" />{" "}
             <span className="inline-block bg-gradient-to-r from-primary-default to-accent-default bg-clip-text text-transparent">
