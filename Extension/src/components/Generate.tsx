@@ -45,13 +45,7 @@ const Generate = () => {
     }
   };
 
-  return (
-    <>
-      <div className="bg-background-900 p-4 mb-4 rounded-lg items-center">
-        <button onClick={handleClick}>{text}</button>
-      </div>
-    </>
-  );
+  return <button onClick={handleClick}>{text}</button>;
 };
 
 export default Generate;
