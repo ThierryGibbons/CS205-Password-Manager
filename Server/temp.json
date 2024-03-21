@@ -1,0 +1,11 @@
+{
+    "passwords": [
+        {
+            "site": "Site",
+            "url": "website.com",
+            "user": "admin",
+            "password": "admin",
+            "notes": "Notes"
+        }
+    ]
+}
