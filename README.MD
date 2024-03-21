@@ -31,13 +31,38 @@ cd './Passwords Made Easy'
 ```
 npm install
 ```
+4. Create a Python virtual environment for the Flask backend:
+```
+python3 -m venv venv
+```
+5. Activate the virtual environment:
+
+On Windows 
+```
+.\venv\Scripts\activate
+```
+On macOS/Linux
+```
+source venv/bin/activate
+```
+6. Install Flask within the virtual environment:
+```
+pip install Flask
+```
 
 ## Running the Project
 
 After installation, you can run the project locally:
+
+Frontend
 ```
 npm run dev
 ```
+Backend
+```
+python3 app.py
+```
+
 
 This command will start a local development server.
 
