@@ -1,3 +1,5 @@
+import Generate from "../components/Generate";
+
 const GetStartedPage = () => {
   return (
     <>
@@ -28,6 +30,7 @@ const GetStartedPage = () => {
               type="email"
               placeholder="you@email.com"
               className="p-4 mb-4 bg-background-900 rounded-lg"
+              id="emailInput"
             />
             {/* Password Input Box */}
             <div className="relative">
@@ -35,15 +38,43 @@ const GetStartedPage = () => {
                 type="password"
                 placeholder="********"
                 className="left-0 p-4 bg-background-900 rounded-lg w-full"
+                id="passwordInput"
               />
+              <button
+                className="absolute inset-y-0 right-10 px-4 text-text-default hover:text-accent-default text-3xl rounded-r-lg"
+                onClick={() => {
+                  // Toggle the password visibility
+                  const passwordInput = document.getElementById(
+                    "passwordInput"
+                  ) as HTMLInputElement;
+                  if (passwordInput) {
+                    if (passwordInput.type === "password") {
+                      passwordInput.type = "text";
+                    } else {
+                      passwordInput.type = "password";
+                    }
+                  }
+                }}
+              >
+                𓁹
+              </button>
               <button
                 className="absolute inset-y-0 right-0 px-4 text-text-default hover:text-accent-default text-3xl rounded-r-lg"
                 onClick={() => {
                   // Generate a random password
+                  const passwordInput = document.getElementById(
+                    "passwordInput"
+                  ) as HTMLInputElement;
+                  if (passwordInput) {
+                    passwordInput.value = Generate();
+                    passwordInput.type = "text";
+                  }
                 }}
               >
                 ⚄
               </button>
+              {/* <Temp /> */}
+              {/* <Generate /> */}
             </div>
           </div>
         </div>
