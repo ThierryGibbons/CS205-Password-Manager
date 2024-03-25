@@ -31,7 +31,7 @@ const PasswordData = () => {
     return <div>Loading...</div>;
   }
 
-  return <div>Done</div>;
+  return;
 };
 
 export default PasswordData;

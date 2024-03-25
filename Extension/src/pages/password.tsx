@@ -37,7 +37,6 @@ const PasswordPage = () => {
             <a
               key={index}
               href={`#pwdView-${entry.site}`}
-              target="_blank"
               rel="noopener noreferrer"
               className="font-Poppins font-bold bg-background-900 p-3 m-2 rounded-lg w-[60vw] items-center"
             >
