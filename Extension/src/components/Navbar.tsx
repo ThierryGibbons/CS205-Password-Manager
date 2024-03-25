@@ -108,9 +108,9 @@ const ButtonAccount = ({ v }: { v: string }) => {
               clipRule="evenodd"
             />
           </svg>
-          <a className="text-text-default text-base font-bold font-Poppins">
+          <span className="text-text-default text-base font-bold font-Poppins">
             Account
-          </a>
+          </span>
         </div>
       </a>
     );
