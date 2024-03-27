@@ -4,42 +4,77 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///mydatabase.db' # Placeholder URL
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # Removes warning
 db = SQLAlchemy(app)
-CORS(app)
 
 class Item(db.Model):
     _id = db.Column("id", db.Integer, primary_key=True) # Gives each user a unique ID
-    email = db.Column(db.String(100))
+    site = db.Column(db.String(100))
+    url = db.Column(db.String(100))
+    user = db.Column(db.String(100))
+    password = db.Column(db.String(100))
+    notes = db.Column(db.String(100))
 
     def __repr__(self):
         return '<Item %r>' % self.email
+
+
+with app.app_context():
+    db.create_all()
+
 
 @app.route('/')
 def home():
     if request.method == 'GET':
         # Load Data
-        return "temp"
+        return jsonify({"success": True, "response": "Hello World"}), 200 # 200 is the status code for "OK
+        # return "Hello World"
 
 
-@app.route('/items', methods=['POST'])
-def add_item():
-    email = request.json['email']
-    item = Item(email=email)
-    db.session.add(item)
-    db.session.commit()
-    return jsonify({"success": True, "response": "Item added"}), 201 # 201 is the status code for created
+# @app.route('/items', methods=['POST'])
+# def add_item():
+#     user = request.json['user']
+#     item = Item(user=user)
+#     db.session.add(item)
+#     db.session.commit()
+#     return jsonify({"success": True, "response": "Item added"}), 201 # 201 is the status code for created
 
 @app.route('/items', methods=['GET'])
 def get_items():
     items = Item.query.all()
-    item_list = []
-    for item in items:
-        item_list.append({"email": item.email})
-    return jsonify({"success": True, "response": item_list})
+    if items is None:
+        return jsonify({"success": False, "response": "No items found"}), 404
+    else:
+        item_list = []
+        for item in items:
+            item_list.append({"site": item.site})
+            item_list.append({"url": item.url})
+            item_list.append({"user": item.user})
+            item_list.append({"password": item.password})
+            item_list.append({"notes": item.notes})
+        return jsonify({"success": True, "response": item_list})
+
+@app.route('/items', methods=['POST'])
+def add_item():
+    try:
+        site = request.json.get('site')
+        url = request.json.get('url')
+        user = request.json.get('user')
+        password = request.json.get('password')
+        notes = request.json.get('notes')
+        if not all([site, url, user, password, notes]):
+            return jsonify({"success": False, "response": "Missing required data"}), 400
+        item = Item(site=site, url=url, user=user, password=password, notes=notes)
+        db.session.add(item)
+        db.session.commit()
+        return jsonify({"success": True, "response": "Item added"}), 201
+    except Exception as e:
+        app.logger.error(f"Failed to add item: {e}")
+        return jsonify({"success": False, "response": "Failed to add item"}), 500
 
 if __name__ == '__main__':
-    db.create_all()
-    app.run(debug=False)
+    # db.create_all()
+    app.run(debug=True)

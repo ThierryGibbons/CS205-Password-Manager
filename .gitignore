@@ -18,6 +18,9 @@ venv/
 # Python
 __pycache__/
 
+# Instance
+instance/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
