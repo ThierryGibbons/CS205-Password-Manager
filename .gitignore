@@ -15,6 +15,9 @@ dist-ssr
 # Virtual Environment
 venv/
 
+#pycache
+__pycache__/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
