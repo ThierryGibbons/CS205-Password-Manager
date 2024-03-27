@@ -7,7 +7,7 @@ export default {
   theme: {
     colors: {
       'text': {
-        default: 'e5ebf3',
+        default: '#e5ebf3',
         50: '#eef2f7',
         100: '#dce4ef',
         200: '#b9c9df',
