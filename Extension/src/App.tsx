@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import NavBar from "./components/Navbar";
-import PasswordData from "./components/PasswordData";
 
 // Pages
 import PasswordPage from "./pages/password";
@@ -26,7 +25,6 @@ function App() {
   }, []);
   return (
     <>
-      <PasswordData />
       <Routes>
         <Route
           path="/"

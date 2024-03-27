@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import PasswordData from "../components/PasswordData";
 
 interface PasswordEntry {
   site: string;
@@ -28,43 +27,45 @@ const PasswordView = () => {
 
   return (
     <div>
-      <PasswordData />
-      <h1 className="font-Poppins font-bold p-18">Password View Page</h1>
+      {/* <PasswordData /> */}
+      <h1 className="font-Poppins font-bold text-text-default p-18">
+        Password View Page
+      </h1>
       {passwords.map((entry, index) => {
         if (entry.site === site) {
           return (
             <div key={index} className="flex flex-row justify-center">
               <div className="flex flex-col">
-                <div className="font-Poppins font-bold bg-background-900 p-3 m-2 rounded-lg w-[30vw] items-center">
+                <div className="font-Poppins font-bold bg-background-900 text-text-default p-3 m-2 rounded-lg w-[30vw] items-center">
                   Site
                 </div>
-                <div className="font-Poppins font-bold bg-background-900 p-3 m-2 rounded-lg w-[30vw] items-center">
+                <div className="font-Poppins font-bold bg-background-900 text-text-default p-3 m-2 rounded-lg w-[30vw] items-center">
                   URL
                 </div>
-                <div className="font-Poppins font-bold bg-background-900 p-3 m-2 rounded-lg w-[30vw] items-center">
+                <div className="font-Poppins font-bold bg-background-900 text-text-default p-3 m-2 rounded-lg w-[30vw] items-center">
                   User
                 </div>
-                <div className="font-Poppins font-bold bg-background-900 p-3 m-2 rounded-lg w-[30vw] items-center">
+                <div className="font-Poppins font-bold bg-background-900 text-text-default p-3 m-2 rounded-lg w-[30vw] items-center">
                   Password
                 </div>
-                <div className="font-Poppins font-bold bg-background-900 p-3 m-2 rounded-lg w-[30vw] items-center">
+                <div className="font-Poppins font-bold bg-background-900 text-text-default p-3 m-2 rounded-lg w-[30vw] items-center">
                   Notes
                 </div>
               </div>
               <div className="flex flex-col">
-                <div className="font-Poppins font-bold bg-background-900 p-3 m-2 rounded-lg w-[60vw] items-center">
+                <div className="font-Poppins font-bold bg-background-900 text-text-default p-3 m-2 rounded-lg w-[60vw] items-center">
                   {entry.site}
                 </div>
-                <div className="font-Poppins font-bold bg-background-900 p-3 m-2 rounded-lg w-[60vw] items-center">
+                <div className="font-Poppins font-bold bg-background-900 text-text-default p-3 m-2 rounded-lg w-[60vw] items-center">
                   {entry.url}
                 </div>
-                <div className="font-Poppins font-bold bg-background-900 p-3 m-2 rounded-lg w-[60vw] items-center">
+                <div className="font-Poppins font-bold bg-background-900 text-text-default p-3 m-2 rounded-lg w-[60vw] items-center">
                   {entry.user}
                 </div>
-                <div className="font-Poppins font-bold bg-background-900 p-3 m-2 rounded-lg w-[60vw] items-center">
+                <div className="font-Poppins font-bold bg-background-900 text-text-default p-3 m-2 rounded-lg w-[60vw] items-center">
                   {entry.password}
                 </div>
-                <div className="font-Poppins font-bold bg-background-900 p-3 m-2 rounded-lg w-[60vw] items-center">
+                <div className="font-Poppins font-bold bg-background-900 text-text-default p-3 m-2 rounded-lg w-[60vw] items-center">
                   {entry.notes}
                 </div>
               </div>
