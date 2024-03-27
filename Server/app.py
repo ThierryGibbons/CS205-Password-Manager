@@ -19,7 +19,10 @@ class Item(db.Model):
 
 @app.route('/')
 def home():
-    return "Hello, World!"
+    if request.method == 'GET':
+        # Load Data
+        return "temp"
+
 
 @app.route('/items', methods=['POST'])
 def add_item():

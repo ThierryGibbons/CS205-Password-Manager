@@ -15,7 +15,7 @@ dist-ssr
 # Virtual Environment
 venv/
 
-#pycache
+# Python
 __pycache__/
 
 # Editor directories and files

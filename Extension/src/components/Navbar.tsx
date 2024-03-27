@@ -2,7 +2,7 @@ const ButtonPassword = ({ v }: { v: string }) => {
   if (v == "full") {
     return (
       <a href="#">
-        <div className="bg-background-900 p-4 mb-4 rounded-lg flex items-center gap-2">
+        <div className="bg-background-900 p-4 mb-4 rounded-lg flex items-center gap-2 w-[140px]">
           {/* lock svg */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -17,7 +17,7 @@ const ButtonPassword = ({ v }: { v: string }) => {
             />
           </svg>
 
-          <span className="text-text-default text-base font-bold font-Poppins">
+          <span className="text-text-default text-sm font-bold font-Poppins">
             Passwords
           </span>
         </div>
@@ -50,7 +50,7 @@ const ButtonAlert = ({ v }: { v: string }) => {
   if (v == "full") {
     return (
       <a href="#alert">
-        <div className="bg-background-900 p-4 mb-4 rounded-lg flex items-center gap-2">
+        <div className="bg-background-900 p-4 mb-4 rounded-lg flex items-center gap-2 w-[140px]">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -63,7 +63,7 @@ const ButtonAlert = ({ v }: { v: string }) => {
               clipRule="evenodd"
             />
           </svg>
-          <span className="text-text-default text-base font-bold font-Poppins">
+          <span className="text-text-default text-sm font-bold font-Poppins">
             Alerts
           </span>
         </div>
@@ -95,7 +95,7 @@ const ButtonAccount = ({ v }: { v: string }) => {
   if (v == "full") {
     return (
       <a href="#account">
-        <div className="bg-background-900 p-4 mb-4 rounded-lg flex items-center gap-2">
+        <div className="bg-background-900 p-4 mb-4 rounded-lg flex items-center gap-2 w-[140px]">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -108,9 +108,9 @@ const ButtonAccount = ({ v }: { v: string }) => {
               clipRule="evenodd"
             />
           </svg>
-          <a className="text-text-default text-base font-bold font-Poppins">
+          <span className="text-text-default text-sm font-bold font-Poppins">
             Account
-          </a>
+          </span>
         </div>
       </a>
     );
@@ -156,7 +156,7 @@ const NavBar = ({ v }: { v: string }) => {
   } else if (v == "Alert") {
     return (
       <nav className="pb-4">
-        <div className="container mx-auto flex justify-between items-center">
+        <div className="container mx-auto flex justify-between items-center gap-2">
           <div className="hover:text-accent-400">
             <ButtonAlert v="full" />
           </div>
