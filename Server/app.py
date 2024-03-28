@@ -24,12 +24,14 @@ class Item(db.Model):
 with app.app_context():
     db.create_all()
 
+# Nothing
 @app.route('/')
 def home():
     if request.method == 'GET':
         # Load Data
         return jsonify({"success": True, "response": "Hello World"}), 200 # 200 is the status code for "OK
 
+# Get all items
 @app.route('/items', methods=['GET'])
 def get_items():
     items = Item.query.all()
@@ -40,6 +42,7 @@ def get_items():
         item_list = [{"id": item._id, "site": item.site, "url": item.url, "user": item.user, "password": item.password, "notes": item.notes} for item in items]
         return jsonify({"success": True, "response": item_list})
 
+# Add an item
 @app.route('/items', methods=['POST'])
 def add_item():
     try:
@@ -60,6 +63,7 @@ def add_item():
         app.logger.error(f"Failed to add item: {e}")
         return jsonify({"success": False, "response": "Failed to add item"}), 500
 
+# Delete an item
 @app.route('/itemsD', methods=['POST'])
 def remove_item():
     try:
@@ -75,6 +79,33 @@ def remove_item():
     except Exception as e:
         app.logger.error(f"Failed to remove item: {e}")
         return jsonify({"success": False, "response": "Failed to remove item"}), 500
+
+# Update an item
+@app.route('/itemsU', methods=['POST'])
+def update_item():
+    try:
+        _id = request.json.get('id')
+        site = request.json.get('site')
+        url = request.json.get('url')
+        user = request.json.get('user')
+        password = request.json.get('password')
+        notes = request.json.get('notes')
+        if not all([site, url, user, password, notes]):
+            return jsonify({"success": False, "response": "Missing required data"}), 400
+        item = Item.query.filter_by(_id=id).first()
+        if item is None:
+            return jsonify({"success": False, "response": "Item not found"}), 404
+        item.site = site
+        item.url = url
+        item.user = user
+        item.password = password
+        item.notes = notes
+        db.session.commit()
+        return jsonify({"success": True, "response": "Item updated"}), 200
+    except Exception as e:
+        app.logger.error(f"Failed to update item: {e}")
+        return jsonify({"success": False, "response": "Failed to update item"}), 500
+
 
 if __name__ == '__main__':
     app.run(debug=True)
