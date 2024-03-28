@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import NavBar from "./components/Navbar";
+import { GetData } from "./components/PasswordData";
 
 // Pages
 import PasswordPage from "./pages/password";
 import AlertPage from "./pages/alert";
 import AccountPage from "./pages/account";
 import PasswordView from "./pages/passwordView";
+import PasswordNew from "./pages/passwordNew";
 
 interface PasswordEntry {
   site: string;
@@ -19,6 +21,7 @@ interface PasswordEntry {
 
 function App() {
   const [passwords, setPasswords] = useState<PasswordEntry[]>([]);
+  GetData();
 
   useEffect(() => {
     setPasswords(JSON.parse(localStorage.getItem("passwords") || "[]"));
@@ -50,6 +53,15 @@ function App() {
             <>
               <NavBar v="Account" />
               <AccountPage />
+            </>
+          }
+        />
+        <Route
+          path="/pwdCreate"
+          element={
+            <>
+              <NavBar v="Password" />
+              <PasswordNew />
             </>
           }
         />

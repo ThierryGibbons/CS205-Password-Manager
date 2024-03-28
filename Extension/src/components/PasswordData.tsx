@@ -1,17 +1,16 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
-interface PasswordEntry {
-  id: number;
-  site: string;
-  url: string;
-  user: string;
-  password: string;
-  notes: string;
-}
+// interface PasswordEntry {
+//   id: number;
+//   site: string;
+//   url: string;
+//   user: string;
+//   password: string;
+//   notes: string;
+// }
 
 const GetData = () => {
   // Retrieve data from server
-  const [passwords, setPasswords] = useState<PasswordEntry[]>([]);
   useEffect(() => {
     fetch("http://127.0.0.1:5000/items", {
       // Make sure the URL matches your Flask server URL
@@ -28,12 +27,10 @@ const GetData = () => {
         return response.json();
       })
       .then((data) => {
-        // console.log(data);
         console.log(data.response);
-        setPasswords(data.response);
 
         // Local Storage
-        localStorage.setItem("passwords", JSON.stringify(passwords));
+        localStorage.setItem("passwords", JSON.stringify(data.response));
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
@@ -72,7 +69,7 @@ const AddData = () => {
     });
 };
 
-const DeleteData = () => {
+const DeleteData = (site: string) => {
   // Remove Passwords
 
   fetch("http://127.0.0.1:5000/itemsD", {
@@ -82,7 +79,7 @@ const DeleteData = () => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      site: "example.com",
+      site: site,
     }),
   })
     .then((response) => {

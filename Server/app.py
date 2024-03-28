@@ -1,4 +1,3 @@
-
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
@@ -19,28 +18,17 @@ class Item(db.Model):
     notes = db.Column(db.String(100))
 
     def __repr__(self):
-        return '<Item %r>' % self.email
-
+        # return '<Item %r>' % self.user
+        return f"Item('{self.site}', '{self.url}', '{self.user}', '{self.password}', '{self.notes}')"
 
 with app.app_context():
     db.create_all()
-
 
 @app.route('/')
 def home():
     if request.method == 'GET':
         # Load Data
         return jsonify({"success": True, "response": "Hello World"}), 200 # 200 is the status code for "OK
-        # return "Hello World"
-
-
-# @app.route('/items', methods=['POST'])
-# def add_item():
-#     user = request.json['user']
-#     item = Item(user=user)
-#     db.session.add(item)
-#     db.session.commit()
-#     return jsonify({"success": True, "response": "Item added"}), 201 # 201 is the status code for created
 
 @app.route('/items', methods=['GET'])
 def get_items():
@@ -49,13 +37,6 @@ def get_items():
         return jsonify({"success": False, "response": "No items found"}), 404
     else:
         item_list = []
-        # for item in items:
-        #     item_list.append({"id": item._id})
-        #     item_list.append({"site": item.site})
-        #     item_list.append({"url": item.url})
-        #     item_list.append({"user": item.user})
-        #     item_list.append({"password": item.password})
-        #     item_list.append({"notes": item.notes})
         item_list = [{"id": item._id, "site": item.site, "url": item.url, "user": item.user, "password": item.password, "notes": item.notes} for item in items]
         return jsonify({"success": True, "response": item_list})
 
@@ -72,6 +53,8 @@ def add_item():
         item = Item(site=site, url=url, user=user, password=password, notes=notes)
         db.session.add(item)
         db.session.commit()
+        print(item)
+        print(db.session.query(Item).all())
         return jsonify({"success": True, "response": "Item added"}), 201
     except Exception as e:
         app.logger.error(f"Failed to add item: {e}")
@@ -94,7 +77,6 @@ def remove_item():
         return jsonify({"success": False, "response": "Failed to remove item"}), 500
 
 if __name__ == '__main__':
-    # db.create_all()
     app.run(debug=True)
 
 

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-// import PasswordData from "../components/PasswordData";
-// import { GetData, AddData, DeleteData } from "../components/PasswordData";
+import { GetData } from "../components/PasswordData";
 
 interface PasswordEntry {
   site: string;
@@ -13,13 +12,14 @@ interface PasswordEntry {
 const PasswordPage = () => {
   const [passwords, setPasswords] = useState<PasswordEntry[]>([]);
 
+  GetData();
   useEffect(() => {
     setPasswords(JSON.parse(localStorage.getItem("passwords") || "[]"));
+    console.log("passwords", passwords);
   }, []);
 
   return (
     <div>
-      {/* <PasswordData /> */}
       <h1 className="font-Poppins font-bold text-text-default p-18">
         Password Page
       </h1>
@@ -60,22 +60,24 @@ const PasswordPage = () => {
             />
           </svg>
         </div>
-        <div className="bg-secondary-default p-4 rounded-lg flex items-center">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M12 4.5v15m7.5-7.5h-15"
-            />
-          </svg>
-        </div>
+        <a href="#pwdCreate">
+          <div className="bg-secondary-default p-4 rounded-lg flex items-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 4.5v15m7.5-7.5h-15"
+              />
+            </svg>
+          </div>
+        </a>
       </div>
       <div className="flex flex-row justify-center">
         <div className="flex flex-col">
