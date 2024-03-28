@@ -69,6 +69,45 @@ const AddData = () => {
     });
 };
 
+const UpdateData = (
+  id: number,
+  site: string,
+  url: string,
+  user: string,
+  password: string,
+  notes: string
+) => {
+  // Update Passwords
+
+  fetch("http://127.0.0.1:5000/itemsU", {
+    method: "POST",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      id: id,
+      site: site,
+      url: url,
+      user: user,
+      password: password,
+      notes: notes,
+    }),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((error) => {
+      console.error("Error fetching data: ", error);
+    });
+};
+
 const DeleteData = (site: string) => {
   // Remove Passwords
 
@@ -96,4 +135,4 @@ const DeleteData = (site: string) => {
     });
 };
 
-export { GetData, AddData, DeleteData };
+export { GetData, AddData, UpdateData, DeleteData };

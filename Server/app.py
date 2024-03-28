@@ -90,16 +90,22 @@ def update_item():
         user = request.json.get('user')
         password = request.json.get('password')
         notes = request.json.get('notes')
-        if not all([site, url, user, password, notes]):
+        if not _id:
             return jsonify({"success": False, "response": "Missing required data"}), 400
-        item = Item.query.filter_by(_id=id).first()
+        item = Item.query.filter_by(_id=_id).first()
         if item is None:
             return jsonify({"success": False, "response": "Item not found"}), 404
-        item.site = site
-        item.url = url
-        item.user = user
-        item.password = password
-        item.notes = notes
+        if site:
+            item.site = site
+        if url:
+            item.url = url
+        if user:
+            item.user = user
+        if password:
+            item.password = password
+        if notes:
+            item.notes = notes
+
         db.session.commit()
         return jsonify({"success": True, "response": "Item updated"}), 200
     except Exception as e:

@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { DeleteData } from "../components/PasswordData";
+import { GetData, UpdateData, DeleteData } from "../components/PasswordData";
 
 interface PasswordEntry {
+  id: number;
   site: string;
   url: string;
   user: string;
@@ -11,6 +12,15 @@ interface PasswordEntry {
 
 const PasswordView = () => {
   const [hash, setHash] = useState("");
+  const [edit, setEdit] = useState(false);
+
+  const [site, setSite] = useState("");
+  const [url, setUrl] = useState("");
+  const [user, setUser] = useState("");
+  const [password, setPassword] = useState("");
+  const [notes, setNotes] = useState("");
+
+  GetData();
 
   // Get # path from URL
   useEffect(() => {
@@ -24,11 +34,67 @@ const PasswordView = () => {
   }, []);
 
   // Convert #pwdView-Site to Site
-  const site = hash.replace("#pwdView-", "");
+  const currentSite = hash.replace("#pwdView-", "");
+
+  const siteInput = document.getElementById("site") as HTMLInputElement;
+  const urlInput = document.getElementById("url") as HTMLInputElement;
+  const userInput = document.getElementById("user") as HTMLInputElement;
+  const passwordInput = document.getElementById("password") as HTMLInputElement;
+  const notesInput = document.getElementById("notes") as HTMLInputElement;
+
+  const editButton = () => {
+    setEdit(true);
+
+    // Toggle edit fields
+    siteInput.readOnly = false;
+    urlInput.readOnly = false;
+    userInput.readOnly = false;
+    passwordInput.readOnly = false;
+    notesInput.readOnly = false;
+  };
+
+  const saveButton = () => {
+    console.log("Save Button");
+    setEdit(false);
+    siteInput.readOnly = true;
+    urlInput.readOnly = true;
+    userInput.readOnly = true;
+    passwordInput.readOnly = true;
+    notesInput.readOnly = true;
+
+    // Save data to server
+    const passwordEntry = passwords.find((entry) => entry.site === currentSite);
+    if (passwordEntry) {
+      const id = passwordEntry.id;
+      // Use id...
+      UpdateData(
+        id,
+        siteInput.value,
+        urlInput.value,
+        userInput.value,
+        passwordInput.value,
+        notesInput.value
+      );
+      console.log(
+        "Updated data",
+        id,
+        "\nsite",
+        siteInput.value,
+        "\nurl",
+        urlInput.value,
+        "\nuser",
+        userInput.value,
+        "\npassword",
+        passwordInput.value,
+        "\nnotes",
+        notesInput.value
+      );
+    }
+  };
 
   const deleteButton = () => {
     // Delete data from server
-    DeleteData(site);
+    DeleteData(currentSite);
   };
 
   return (
@@ -37,7 +103,7 @@ const PasswordView = () => {
         Password View Page
       </h1>
       {passwords.map((entry, index) => {
-        if (entry.site === site) {
+        if (entry.site === currentSite) {
           return (
             <div key={index} className="flex flex-row justify-center">
               <div className="flex flex-col">
@@ -59,19 +125,54 @@ const PasswordView = () => {
               </div>
               <div className="flex flex-col">
                 <div className="font-Poppins font-bold bg-background-900 text-text-default p-3 m-2 rounded-lg w-[60vw] items-center">
-                  {entry.site}
+                  <input
+                    id="site"
+                    className="bg-transparent placeholder-text-200 text-center"
+                    readOnly={true}
+                    placeholder={entry.site}
+                    value={site}
+                    onChange={(e) => setSite(e.target.value)}
+                  />
                 </div>
                 <div className="font-Poppins font-bold bg-background-900 text-text-default p-3 m-2 rounded-lg w-[60vw] items-center">
-                  {entry.url}
+                  <input
+                    id="url"
+                    className="bg-transparent placeholder-text-200 text-center"
+                    readOnly={true}
+                    placeholder={entry.url}
+                    value={url}
+                    onChange={(e) => setUrl(e.target.value)}
+                  />
                 </div>
                 <div className="font-Poppins font-bold bg-background-900 text-text-default p-3 m-2 rounded-lg w-[60vw] items-center">
-                  {entry.user}
+                  <input
+                    id="user"
+                    className="bg-transparent placeholder-text-200 text-center"
+                    readOnly={true}
+                    placeholder={entry.user}
+                    value={user}
+                    onChange={(e) => setUser(e.target.value)}
+                  />
                 </div>
                 <div className="font-Poppins font-bold bg-background-900 text-text-default p-3 m-2 rounded-lg w-[60vw] items-center">
-                  {entry.password}
+                  <input
+                    id="password"
+                    className="bg-transparent placeholder-text-200 text-center"
+                    readOnly={true}
+                    placeholder={entry.password}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
                 </div>
                 <div className="font-Poppins font-bold bg-background-900 text-text-default p-3 m-2 rounded-lg w-[60vw] items-center">
-                  {entry.notes}
+                  <input
+                    id="notes"
+                    className="bg-transparent placeholder-text-200 text-center"
+                    readOnly={true}
+                    placeholder={entry.notes}
+                    value={notes}
+                    onChange={(e) => setNotes(e.target.value)}
+                  />
                 </div>
               </div>
             </div>
@@ -79,7 +180,7 @@ const PasswordView = () => {
         }
       })}
       {/* Footer Buttons */}
-      <div className="flex inset-x-0 bottom-0">
+      <div className="flex inset-x-0 bottom-0 w-[100vh]">
         <button
           className="bg-secondary-default text-text-default p-4 rounded-lg flex items-center gap-2"
           onClick={deleteButton}
@@ -100,6 +201,50 @@ const PasswordView = () => {
           </svg>
           <span className="text-sm font-bold font-Poppins">Delete</span>
         </button>
+
+        {!edit ? (
+          <button
+            className="bg-primary-default p-4 rounded-lg flex items-center justify-end gap-2"
+            onClick={editButton}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"
+              />
+            </svg>
+            <span className="text-sm font-bold font-Poppins">Edit</span>
+          </button>
+        ) : (
+          <button
+            className="bg-accent-default p-4 rounded-lg flex items-center justify-end gap-2"
+            onClick={saveButton}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"
+              />
+            </svg>
+            <span className="text-sm font-bold font-Poppins">Save</span>
+          </button>
+        )}
       </div>
     </div>
   );
