@@ -24,7 +24,7 @@ const PasswordPage = () => {
         Password Page
       </h1>
       <div className="container mx-auto flex justify-center items-center gap-2">
-        <div className="bg-secondary-default p-4 rounded-lg flex items-center">
+        <div className="bg-secondary-default p-3 rounded-lg flex items-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -40,7 +40,7 @@ const PasswordPage = () => {
             />
           </svg>
         </div>
-        <div className="bg-primary-default p-4 rounded-lg flex items-center">
+        <div className="bg-primary-default p-3 rounded-lg flex items-center">
           <input
             className="bg-transparent text-text-950 font-Poppins placeholder-text-950 border border-transparent"
             placeholder="Passwords"
@@ -61,7 +61,7 @@ const PasswordPage = () => {
           </svg>
         </div>
         <a href="#pwdCreate">
-          <div className="bg-secondary-default p-4 rounded-lg flex items-center">
+          <div className="bg-secondary-default p-3 rounded-lg flex items-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
