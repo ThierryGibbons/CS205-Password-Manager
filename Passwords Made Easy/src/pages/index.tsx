@@ -27,7 +27,8 @@ const HomePage = () => {
         </div>
         <div className="flex flex-col justify-center">
           <h1 className="text-xl text-center whitespace-pre font-poppins font-medium text-primary-default">
-            <a href="/getstarted">{">>>        Get Started        <<<"}</a>
+          <a href={`${import.meta.env.VITE_BACKEND_URL}/login`}>{">>> Get Started <<<"}</a>
+
           </h1>
         </div>
       </div>

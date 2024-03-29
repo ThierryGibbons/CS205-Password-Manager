@@ -50,6 +50,13 @@ source venv/bin/activate
 pip install Flask
 ```
 
+7. Install additional Python packages required for Auth0 integration and backend functionality:
+
+```
+pip install authlib python-dotenv Flask-CORS requests
+```
+
+
 ## Running the Project
 
 After installation, you can run the project locally:
