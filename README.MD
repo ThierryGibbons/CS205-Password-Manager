@@ -68,12 +68,34 @@ This command will start a local development server.
 
 ## Building for Production
 
-To build the project for production, run:
+### Website
+
+Within the `Passwords Made Easy` directory, run:
 ```
 npm run build
 ```
 
 This will generate a `dist/` directory with your compiled project.
+
+Move this dist/ directory to the `Server` directory.
+
+Within the `Server` directory, open the virtual environment and run:
+```
+flask run
+```
+
+### Extension
+
+Within the `Extension` directory, run:
+```
+npm run build
+```
+
+This will generate a `dist/` directory with your compiled project.
+
+To load the extension into Chrome, navigate to `chrome://extensions/` and enable Developer Mode.
+
+Click "Load unpacked" and select the `dist/` directory.
 
 ## Contributing
 
