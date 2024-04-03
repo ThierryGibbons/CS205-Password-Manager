@@ -9,7 +9,7 @@ load_dotenv()
 
 app = Flask(__name__)
 # Enable CORS
-CORS(app)
+CORS(app, supports_credentials=True)
 
 # Set the secret key for session management
 app.secret_key = os.getenv('FLASK_SECRET_KEY')
@@ -17,26 +17,24 @@ app.secret_key = os.getenv('FLASK_SECRET_KEY')
 # Auth0 configuration
 oauth = OAuth(app)
 auth0 = oauth.register(
-   'auth0',
-   client_id=os.getenv('AUTH0_CLIENT_ID'),
-   client_secret=os.getenv('AUTH0_CLIENT_SECRET'),
-   api_base_url=os.getenv('AUTH0_DOMAIN'),
-   access_token_url=f"{os.getenv('AUTH0_DOMAIN')}/oauth/token",
-   authorize_url=f"{os.getenv('AUTH0_DOMAIN')}/authorize",
-   client_kwargs={'scope': 'openid profile email'},
+    'auth0',
+    client_id=os.getenv('AUTH0_CLIENT_ID'),
+    client_secret=os.getenv('AUTH0_CLIENT_SECRET'),
+    api_base_url=os.getenv('AUTH0_DOMAIN'),
+    access_token_url=f"{os.getenv('AUTH0_DOMAIN')}/oauth/token",
+    authorize_url=f"{os.getenv('AUTH0_DOMAIN')}/authorize",
+    client_kwargs={'scope': 'openid profile email'},
 )
 
 # Controllers API
 @app.route('/')
 def home():
-   return "Hello, World!"
+    return "Hello, World!"
 
 @app.route('/login')
 def login():
-   print("Accessing the /login route")
-   print(f"Redirect URI: {os.getenv('AUTH0_CALLBACK_URL')}")
-   # Redirect to Auth0 login page
-   return auth0.authorize_redirect(redirect_uri=os.getenv('AUTH0_CALLBACK_URL'))
+    # Redirect to Auth0 login page
+    return auth0.authorize_redirect(redirect_uri=os.getenv('AUTH0_CALLBACK_URL'))
 
 @app.route('/callback')
 def callback():
@@ -45,7 +43,7 @@ def callback():
     resp = auth0.get('userinfo')
     userinfo = resp.json()
 
-    # Store the user information in flask session.
+    # Store the user information in Flask session.
     session['jwt_payload'] = userinfo
     session['profile'] = {
         'user_id': userinfo['sub'],
@@ -53,22 +51,21 @@ def callback():
         'picture': userinfo['picture']
     }
 
-    # Log the redirect URL for testing
-    print("Redirecting to: http://localhost:5173/account")
+    # Redirect directly to the /account page using an environment variable
+    redirect_url = os.getenv('FRONTEND_URL') + '/account'
+    return redirect(redirect_url)
 
-    # Redirect directly to the hardcoded URL
-    return redirect('http://localhost:5173/account')
 
 @app.route('/dashboard')
 def dashboard():
-   return 'You are logged in'
+    return 'You are logged in'
 
 @app.route('/logout')
 def logout():
-   # Clear the session and redirect to logout URL
-   session.clear()
-   params = {'returnTo': url_for('home', _external=True), 'client_id': os.getenv('AUTH0_CLIENT_ID')}
-   return redirect(auth0.api_base_url + '/v2/logout?' + urlencode(params))
+    # Clear the session and redirect to logout URL
+    session.clear()
+    params = {'returnTo': url_for('home', _external=True), 'client_id': os.getenv('AUTH0_CLIENT_ID')}
+    return redirect(auth0.api_base_url + '/v2/logout?' + urlencode(params))
 
 if __name__ == "__main__":
-   app.run(debug=True)  # Switch debug=False in production
+    app.run(debug=True)  # Switch debug=False in production
