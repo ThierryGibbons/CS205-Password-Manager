@@ -1,8 +1,9 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
+import os
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='dist')
 CORS(app)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///mydatabase.db' # Placeholder URL
@@ -26,10 +27,14 @@ with app.app_context():
 
 # Nothing
 @app.route('/')
-def home():
-    if request.method == 'GET':
-        # Load Data
-        return jsonify({"success": True, "response": "Hello World"}), 200 # 200 is the status code for "OK
+def serve_root():
+    return send_from_directory('dist', 'index.html')
+
+@app.route('/<path:path>')
+def serve(path):
+    if path and os.path.exists(os.path.join(app.static_folder, path)):
+        return app.send_static_file(path)
+    return send_from_directory('dist', 'index.html')
 
 # Get all items
 @app.route('/items', methods=['GET'])
@@ -114,6 +119,6 @@ def update_item():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, use_reloader=True, port=5000, threaded=True)
 
 
