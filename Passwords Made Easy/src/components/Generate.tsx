@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-
 const Generate = (): string => {
   //   const [text, setText] = useState("Generate");
   const checkPasswordQuality = (password: string): boolean => {
