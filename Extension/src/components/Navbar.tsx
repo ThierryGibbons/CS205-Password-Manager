@@ -2,12 +2,12 @@ const ButtonPassword = ({ v }: { v: string }) => {
   if (v == "full") {
     return (
       <a href="#">
-        <div className="bg-background-900 p-4 mb-4 rounded-lg flex items-center gap-2">
+        <div className="bg-primary-default p-4 mb-4 rounded-lg flex items-center gap-2 w-[140px]">
           {/* lock svg */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
-            fill="currentColor"
+            // fill="currentColor"
             className="w-6 h-6"
           >
             <path
@@ -17,21 +17,18 @@ const ButtonPassword = ({ v }: { v: string }) => {
             />
           </svg>
 
-          <span className="text-text-default text-base font-bold font-Poppins">
-            Passwords
-          </span>
+          <span className="text-sm font-bold font-Poppins">Passwords</span>
         </div>
       </a>
     );
   } else if (v == "half") {
     return (
       <a href="#">
-        <div className="bg-background-900 p-4 mb-4 rounded-lg flex items-center gap-2">
+        <div className="bg-secondary-default p-4 mb-4 rounded-lg flex items-center gap-2">
           {/* lock svg */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
-            fill="currentColor"
             className="w-6 h-6"
           >
             <path
@@ -50,7 +47,7 @@ const ButtonAlert = ({ v }: { v: string }) => {
   if (v == "full") {
     return (
       <a href="#alert">
-        <div className="bg-background-900 p-4 mb-4 rounded-lg flex items-center gap-2">
+        <div className="bg-primary-default p-4 mb-4 rounded-lg flex items-center gap-2 w-[140px]">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -63,16 +60,14 @@ const ButtonAlert = ({ v }: { v: string }) => {
               clipRule="evenodd"
             />
           </svg>
-          <span className="text-text-default text-base font-bold font-Poppins">
-            Alerts
-          </span>
+          <span className="text-sm font-bold font-Poppins">Alerts</span>
         </div>
       </a>
     );
   } else if (v == "half") {
     return (
       <a href="#alert">
-        <div className="bg-background-900 p-4 mb-4 rounded-lg flex items-center gap-2">
+        <div className="bg-secondary-default p-4 mb-4 rounded-lg flex items-center gap-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -95,7 +90,7 @@ const ButtonAccount = ({ v }: { v: string }) => {
   if (v == "full") {
     return (
       <a href="#account">
-        <div className="bg-background-900 p-4 mb-4 rounded-lg flex items-center gap-2">
+        <div className="bg-primary-default p-4 mb-4 rounded-lg flex items-center gap-2 w-[140px]">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -108,16 +103,14 @@ const ButtonAccount = ({ v }: { v: string }) => {
               clipRule="evenodd"
             />
           </svg>
-          <a className="text-text-default text-base font-bold font-Poppins">
-            Account
-          </a>
+          <span className="text-sm font-bold font-Poppins">Account</span>
         </div>
       </a>
     );
   } else if (v == "half") {
     return (
       <a href="#account">
-        <div className="bg-background-900 p-4 mb-4 rounded-lg flex items-center gap-2">
+        <div className="bg-secondary-default p-4 mb-4 rounded-lg flex items-center gap-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -141,13 +134,13 @@ const NavBar = ({ v }: { v: string }) => {
     return (
       <nav className="pb-4">
         <div className="container mx-auto flex justify-between items-center gap-2">
-          <div className="hover:text-accent-400">
+          <div className="fill-current text-text-950 hover:text-accent-400">
             <ButtonPassword v="full" />
           </div>
-          <div className="hover:text-accent-400">
+          <div className="text-text-default hover:text-accent-400">
             <ButtonAlert v="half" />
           </div>
-          <div className="hover:text-accent-400">
+          <div className="text-text-default hover:text-accent-400">
             <ButtonAccount v="half" />
           </div>
         </div>
@@ -156,14 +149,14 @@ const NavBar = ({ v }: { v: string }) => {
   } else if (v == "Alert") {
     return (
       <nav className="pb-4">
-        <div className="container mx-auto flex justify-between items-center">
-          <div className="hover:text-accent-400">
+        <div className="container mx-auto flex justify-between items-center gap-2">
+          <div className="text-text-950 hover:text-accent-400">
             <ButtonAlert v="full" />
           </div>
-          <div className="hover:text-accent-400">
+          <div className="text-text-default hover:text-accent-400">
             <ButtonAccount v="half" />
           </div>
-          <div className="hover:text-accent-400">
+          <div className="text-text-default hover:text-accent-400">
             <ButtonPassword v="half" />
           </div>
         </div>
@@ -173,13 +166,13 @@ const NavBar = ({ v }: { v: string }) => {
     return (
       <nav className="pb-4">
         <div className="container mx-auto flex justify-between items-center gap-2">
-          <div className="hover:text-accent-400">
+          <div className="text-text-950 hover:text-accent-400">
             <ButtonAccount v="full" />
           </div>
-          <div className="hover:text-accent-400">
+          <div className="text-text-default hover:text-accent-400">
             <ButtonPassword v="half" />
           </div>
-          <div className="hover:text-accent-400">
+          <div className="text-text-default hover:text-accent-400">
             <ButtonAlert v="half" />
           </div>
         </div>
