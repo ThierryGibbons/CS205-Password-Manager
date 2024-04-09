@@ -5,10 +5,10 @@ const Navbar: React.FC = () => {
   return (
     <>
       <nav className="p-4">
-        <div className="container mx-auto flex justify-between items-center">
+        <div className=" lg:container lg:mx-auto lg:flex lg:justify-between lg:items-center text-center ">
           <a
             href="/"
-            className="text-text-default hover:text-accent-default text-2xl font-bold font-Poppins"
+            className="text-text-default hover:text-accent-default text-4xl lg:text-2xl font-bold font-Poppins"
           >
             <InteractiveText originalText="Passwords" />{" "}
             <InteractiveText originalText="Made" />{" "}
@@ -17,13 +17,13 @@ const Navbar: React.FC = () => {
           <div>
             <a
               href="/blog"
-              className="px-3 py-2 rounded text-text-default hover:text-accent-default font-Poppins font-light text-xl"
+              className="px-3 py-2 rounded text-text-default hover:text-accent-default font-Poppins font-light text-2xl lg:text-xl"
             >
               Blog
             </a>
             <a
               href="/account"
-              className="px-3 py-2 rounded text-text-default hover:text-accent-default font-Poppins font-light text-xl"
+              className="px-3 py-2 rounded text-text-default hover:text-accent-default font-Poppins font-light text-2xl lg:text-xl"
             >
               Account
             </a>

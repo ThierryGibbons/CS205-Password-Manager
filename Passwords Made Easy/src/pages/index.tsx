@@ -26,7 +26,7 @@ const HomePage = () => {
           </h1>
         </div>
         <div className="flex flex-col justify-center">
-          <h1 className="text-xl text-center whitespace-pre font-poppins font-medium text-primary-default">
+          <h1 className="text-2xl lg:text-xl text-center whitespace-pre font-poppins font-medium text-primary-default">
             <a href="/getstarted">{">>>        Get Started        <<<"}</a>
           </h1>
         </div>
