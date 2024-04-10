@@ -1,6 +1,7 @@
-from flask import Flask, redirect, url_for, session
+from flask import Flask, redirect, url_for, session, request
 from authlib.integrations.flask_client import OAuth
 from flask_cors import CORS
+from urllib.parse import urlencode
 from dotenv import load_dotenv
 import os
 
@@ -8,10 +9,8 @@ import os
 load_dotenv()
 
 app = Flask(__name__)
-# Enable CORS
 CORS(app, supports_credentials=True)
 
-# Set the secret key for session management
 app.secret_key = os.getenv('FLASK_SECRET_KEY')
 
 # Auth0 configuration
@@ -26,35 +25,32 @@ auth0 = oauth.register(
     client_kwargs={'scope': 'openid profile email'},
 )
 
-# Controllers API
 @app.route('/')
 def home():
     return "Hello, World!"
 
 @app.route('/login')
 def login():
-    # Redirect to Auth0 login page
     return auth0.authorize_redirect(redirect_uri=os.getenv('AUTH0_CALLBACK_URL'))
 
 @app.route('/callback')
 def callback():
-    # Handle the response from Auth0
-    auth0.authorize_access_token()
-    resp = auth0.get('userinfo')
-    userinfo = resp.json()
+    # Exchange authorization code for tokens
+    token = auth0.authorize_access_token()
+    # You can also extract other information from the token as needed
+    # For example, `id_token` can be retrieved and added if needed
+    access_token = token.get('access_token')
 
-    # Store the user information in Flask session.
-    session['jwt_payload'] = userinfo
-    session['profile'] = {
-        'user_id': userinfo['sub'],
-        'name': userinfo['name'],
-        'picture': userinfo['picture']
-    }
+    # Assuming you have an environment variable for your frontend URL
+    frontend_url = os.getenv('FRONTEND_URL')
 
-    # Redirect directly to the /account page using an environment variable
-    redirect_url = os.getenv('FRONTEND_URL') + '/account'
+    # Construct the URL with tokens as query parameters
+    redirect_url = f"{frontend_url}/account?access_token={access_token}"
+    
+    # Optionally, add more tokens or information as needed
+    # redirect_url += f"&id_token={token.get('id_token')}"
+
     return redirect(redirect_url)
-
 
 @app.route('/dashboard')
 def dashboard():
@@ -62,10 +58,9 @@ def dashboard():
 
 @app.route('/logout')
 def logout():
-    # Clear the session and redirect to logout URL
     session.clear()
     params = {'returnTo': url_for('home', _external=True), 'client_id': os.getenv('AUTH0_CLIENT_ID')}
     return redirect(auth0.api_base_url + '/v2/logout?' + urlencode(params))
 
 if __name__ == "__main__":
-    app.run(debug=True)  # Switch debug=False in production
+    app.run(debug=True)
