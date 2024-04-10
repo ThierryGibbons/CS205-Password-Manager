@@ -21,6 +21,10 @@ const PasswordNew = () => {
       notes: notes,
     };
     addPassword(newPassword);
+
+    // take user back to password page
+    // window.location.href = "#pwdView-" + site;
+    window.location.href = "#";
   };
 
   return (
