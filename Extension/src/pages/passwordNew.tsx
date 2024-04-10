@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { GetData } from "../components/PasswordData";
 import Generate from "../components/Generate";
+import { usePasswords } from "../components/PasswordData";
 
 const PasswordNew = () => {
+  const { addPassword } = usePasswords();
+
   const [site, setSite] = useState("");
   const [url, setUrl] = useState("");
   const [user, setUser] = useState("");
@@ -10,35 +12,15 @@ const PasswordNew = () => {
   const [notes, setNotes] = useState("");
 
   const handleClick = () => {
-    // Save data to server
-    fetch("http://127.0.0.1:5000/items", {
-      method: "POST",
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        // Data from inputs
-        site: site,
-        url: url,
-        user: user,
-        password: password,
-        notes: notes,
-      }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data);
-        GetData;
-      })
-      .catch((error) => {
-        console.error("Error fetching data: ", error);
-      });
+    const newPassword = {
+      id: 0,
+      site: site,
+      url: url,
+      user: user,
+      password: password,
+      notes: notes,
+    };
+    addPassword(newPassword);
   };
 
   return (

@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import NavBar from "./components/Navbar";
-import { GetData } from "./components/PasswordData";
 
 // Pages
 import PasswordPage from "./pages/password";
@@ -21,7 +20,6 @@ interface PasswordEntry {
 
 function App() {
   const [passwords, setPasswords] = useState<PasswordEntry[]>([]);
-  GetData();
 
   useEffect(() => {
     setPasswords(JSON.parse(localStorage.getItem("passwords") || "[]"));

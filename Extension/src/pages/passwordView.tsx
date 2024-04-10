@@ -1,101 +1,59 @@
 import { useEffect, useState } from "react";
-import { GetData, UpdateData, DeleteData } from "../components/PasswordData";
+import { usePasswords } from "../components/PasswordData";
 import Generate from "../components/Generate";
-
-interface PasswordEntry {
-  id: number;
-  site: string;
-  url: string;
-  user: string;
-  password: string;
-  notes: string;
-}
 
 const PasswordView = () => {
   const [hash, setHash] = useState("");
   const [edit, setEdit] = useState(false);
 
+  const [id, setId] = useState(0);
   const [site, setSite] = useState("");
   const [url, setUrl] = useState("");
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
   const [notes, setNotes] = useState("");
 
-  GetData();
-
   // Get # path from URL
   useEffect(() => {
     setHash(window.location.hash);
   }, []);
 
-  const [passwords, setPasswords] = useState<PasswordEntry[]>([]);
-
-  useEffect(() => {
-    setPasswords(JSON.parse(localStorage.getItem("passwords") || "[]"));
-  }, []);
+  const { passwords, updatePassword, deletePassword } = usePasswords();
 
   // Convert #pwdView-Site to Site
   const currentSite = hash.replace("#pwdView-", "");
 
-  const siteInput = document.getElementById("site") as HTMLInputElement;
-  const urlInput = document.getElementById("url") as HTMLInputElement;
-  const userInput = document.getElementById("user") as HTMLInputElement;
-  const passwordInput = document.getElementById("password") as HTMLInputElement;
-  const notesInput = document.getElementById("notes") as HTMLInputElement;
-
-  const editButton = () => {
-    setEdit(true);
-
-    // Toggle edit fields
-    siteInput.readOnly = false;
-    urlInput.readOnly = false;
-    userInput.readOnly = false;
-    passwordInput.readOnly = false;
-    notesInput.readOnly = false;
-  };
-
   const saveButton = () => {
-    console.log("Save Button");
-    setEdit(false);
-    siteInput.readOnly = true;
-    urlInput.readOnly = true;
-    userInput.readOnly = true;
-    passwordInput.readOnly = true;
-    notesInput.readOnly = true;
-
-    // Save data to server
     const passwordEntry = passwords.find((entry) => entry.site === currentSite);
     if (passwordEntry) {
-      const id = passwordEntry.id;
-      // Use id...
-      UpdateData(
-        id,
-        siteInput.value,
-        urlInput.value,
-        userInput.value,
-        passwordInput.value,
-        notesInput.value
-      );
+      setId(passwordEntry.id);
+    }
+
+    try {
+      // Toggle edit fields
+      setEdit(false);
+    } catch (error) {
       console.log(
-        "Updated data",
-        id,
-        "\nsite",
-        siteInput.value,
-        "\nurl",
-        urlInput.value,
-        "\nuser",
-        userInput.value,
-        "\npassword",
-        passwordInput.value,
-        "\nnotes",
-        notesInput.value
+        "Cannot set properties of null (reading 'readOnly')\n",
+        error
       );
     }
+
+    // Save data
+    const updatedPassword = {
+      id: id,
+      site: site,
+      url: url,
+      user: user,
+      password: password,
+      notes: notes,
+    };
+    updatePassword(id, updatedPassword);
   };
 
   const deleteButton = () => {
     // Delete data from server
-    DeleteData(currentSite);
+    deletePassword(currentSite);
   };
 
   return (
@@ -129,7 +87,7 @@ const PasswordView = () => {
                   <input
                     id="site"
                     className="bg-transparent placeholder-text-200 text-center"
-                    readOnly={true}
+                    readOnly={!edit}
                     placeholder={entry.site}
                     value={site}
                     onChange={(e) => setSite(e.target.value)}
@@ -139,7 +97,7 @@ const PasswordView = () => {
                   <input
                     id="url"
                     className="bg-transparent placeholder-text-200 text-center"
-                    readOnly={true}
+                    readOnly={!edit}
                     placeholder={entry.url}
                     value={url}
                     onChange={(e) => setUrl(e.target.value)}
@@ -149,7 +107,7 @@ const PasswordView = () => {
                   <input
                     id="user"
                     className="bg-transparent placeholder-text-200 text-center"
-                    readOnly={true}
+                    readOnly={!edit}
                     placeholder={entry.user}
                     value={user}
                     onChange={(e) => setUser(e.target.value)}
@@ -159,7 +117,7 @@ const PasswordView = () => {
                   <input
                     id="password"
                     className="bg-transparent placeholder-text-200 text-center"
-                    readOnly={true}
+                    readOnly={!edit}
                     placeholder={entry.password}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
@@ -192,7 +150,7 @@ const PasswordView = () => {
                   <input
                     id="notes"
                     className="bg-transparent placeholder-text-200 text-center"
-                    readOnly={true}
+                    readOnly={!edit}
                     placeholder={entry.notes}
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
@@ -229,7 +187,7 @@ const PasswordView = () => {
         {!edit ? (
           <button
             className="bg-primary-default p-4 rounded-lg flex items-center justify-end gap-2"
-            onClick={editButton}
+            onClick={() => setEdit(true)}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
