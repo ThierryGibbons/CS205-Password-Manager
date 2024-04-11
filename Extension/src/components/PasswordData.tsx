@@ -96,7 +96,7 @@ export const PasswordProvider: React.FC<PasswordProviderProps> = ({
   };
 
   // Update Password
-  const updatePassword = async (id: number, newPassword: PasswordEntry) => {
+  const updatePassword = (id: number, newPassword: PasswordEntry) => {
     const updatedPasswords = passwords.map((password) =>
       password.id === id
         ? {
@@ -113,33 +113,33 @@ export const PasswordProvider: React.FC<PasswordProviderProps> = ({
 
     // Update Local Storage & Backend
     localStorage.setItem("passwords", JSON.stringify(updatedPasswords));
-    console.log("Updated Passwords: ", updatedPasswords);
+    // console.log("Updated Passwords: ", updatedPasswords);
 
-    try {
-      const response = await fetch("http://127.0.0.1:5000/itemsU", {
-        method: "POST",
-        mode: "cors",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: id,
-          site: newPassword.site,
-          url: newPassword.url,
-          user: newPassword.user,
-          password: newPassword.password,
-          notes: newPassword.notes,
-        }),
+    return fetch("http://127.0.0.1:5000/itemsU", {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: id,
+        site: newPassword.site,
+        url: newPassword.url,
+        user: newPassword.user,
+        password: newPassword.password,
+        notes: newPassword.notes,
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+        return "failed";
       });
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      console.log(data);
-    } catch (error) {
-      console.error("Error fetching data: ", error);
-    }
   };
 
   // Delete Password

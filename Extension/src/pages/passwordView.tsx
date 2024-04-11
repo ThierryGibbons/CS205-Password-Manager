@@ -29,16 +29,6 @@ const PasswordView = () => {
       setId(passwordEntry.id);
     }
 
-    try {
-      // Toggle edit fields
-      setEdit(false);
-    } catch (error) {
-      console.log(
-        "Cannot set properties of null (reading 'readOnly')\n",
-        error
-      );
-    }
-
     // Save data
     const updatedPassword = {
       id: id,
@@ -48,7 +38,26 @@ const PasswordView = () => {
       password: password,
       notes: notes,
     };
-    updatePassword(id, updatedPassword);
+    return updatePassword(id, updatedPassword)
+      .then((result: any) => {
+        console.log(
+          result == "failed" ? "Failed to update password" : "Password Updated"
+        );
+        if (result != "failed") {
+          try {
+            // Toggle edit fields
+            setEdit(false);
+          } catch (error) {
+            console.log(
+              "Cannot set properties of null (reading 'readOnly')\n",
+              error
+            );
+          }
+        }
+      })
+      .catch((error: any) => {
+        console.log("Error updating password:", error);
+      });
   };
 
   const deleteButton = () => {
