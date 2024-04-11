@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import NavBar from "./components/Navbar";
+import { usePasswords } from "./components/PasswordData";
 
 // Pages
 import PasswordPage from "./pages/password";
@@ -10,20 +11,9 @@ import AccountPage from "./pages/account";
 import PasswordView from "./pages/passwordView";
 import PasswordNew from "./pages/passwordNew";
 
-interface PasswordEntry {
-  site: string;
-  url: string;
-  user: string;
-  password: string;
-  notes: string;
-}
-
 function App() {
-  const [passwords, setPasswords] = useState<PasswordEntry[]>([]);
+  const { passwords } = usePasswords();
 
-  useEffect(() => {
-    setPasswords(JSON.parse(localStorage.getItem("passwords") || "[]"));
-  }, []);
   return (
     <>
       <Routes>
