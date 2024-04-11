@@ -5,6 +5,7 @@ import Generate from "../components/Generate";
 const PasswordView = () => {
   const [hash, setHash] = useState("");
   const [edit, setEdit] = useState(false);
+  const [saveText, setSaveText] = useState("");
 
   const [id, setId] = useState(0);
   const [site, setSite] = useState("");
@@ -23,42 +24,101 @@ const PasswordView = () => {
   // Convert #pwdView-Site to Site
   const currentSite = hash.replace("#pwdView-", "");
 
+  // const saveButton = () => {
+  //   const passwordEntry = passwords.find((entry) => entry.site === currentSite);
+  //   if (passwordEntry) {
+  //     setId(passwordEntry.id);
+  //     useEffect(() => {
+  //       console.log(
+  //         "initial test\nid: ",
+  //         id,
+  //         "\npasswordEntry.id: ",
+  //         passwordEntry.id
+  //       );
+  //     });
+  //   }
+
+  //   // Save data
+  //   const updatedPassword = {
+  //     id: id,
+  //     site: site,
+  //     url: url,
+  //     user: user,
+  //     password: password,
+  //     notes: notes,
+  //   };
+  //   console.log("b4 id: ", id);
+  //   updatePassword(id, updatedPassword)
+  //     .then((data: string) => {
+  //       if (data === "success") {
+  //         try {
+  //           // Toggle edit fields
+  //           setEdit(false);
+  //           // set save text to "Saved"
+  //           setSaveText("Saved");
+  //           console.log("Saved");
+  //         } catch (error) {
+  //           console.log(
+  //             "Cannot set properties of null (reading 'readOnly')\n",
+  //             error
+  //           );
+  //         }
+  //       }
+  //     })
+  //     .catch((error: any) => {
+  //       console.log("Failed to update passwords:", error);
+  //       setSaveText("Failed to save");
+  //     });
+  // };
+  const [shouldUpdate, setShouldUpdate] = useState(false);
+
   const saveButton = () => {
     const passwordEntry = passwords.find((entry) => entry.site === currentSite);
     if (passwordEntry) {
       setId(passwordEntry.id);
     }
 
-    // Save data
-    const updatedPassword = {
-      id: id,
-      site: site,
-      url: url,
-      user: user,
-      password: password,
-      notes: notes,
-    };
-    return updatePassword(id, updatedPassword)
-      .then((result: any) => {
-        console.log(
-          result == "failed" ? "Failed to update password" : "Password Updated"
-        );
-        if (result != "failed") {
-          try {
-            // Toggle edit fields
-            setEdit(false);
-          } catch (error) {
-            console.log(
-              "Cannot set properties of null (reading 'readOnly')\n",
-              error
-            );
-          }
-        }
-      })
-      .catch((error: any) => {
-        console.log("Error updating password:", error);
-      });
+    setShouldUpdate(true);
   };
+
+  useEffect(() => {
+    if (shouldUpdate) {
+      // Save data
+      const updatedPassword = {
+        id: id,
+        site: site,
+        url: url,
+        user: user,
+        password: password,
+        notes: notes,
+      };
+      console.log("b4 id: ", id);
+      updatePassword(id, updatedPassword)
+        .then((data: string) => {
+          if (data === "success") {
+            try {
+              // Toggle edit fields
+              setEdit(false);
+              // set save text to "Saved"
+              setSaveText("Saved");
+              console.log("Saved");
+            } catch (error) {
+              console.log(
+                "Cannot set properties of null (reading 'readOnly')\n",
+                error
+              );
+            }
+          }
+        })
+        .catch((error: any) => {
+          console.log("Failed to update passwords:", error);
+          setSaveText("Failed to save");
+        });
+
+      // Reset shouldUpdate to false after the update is done
+      setShouldUpdate(false);
+    }
+  }, [shouldUpdate]); // This effect runs whenever `shouldUpdate` changes
 
   const deleteButton = () => {
     // Delete data from server
@@ -241,6 +301,9 @@ const PasswordView = () => {
             <span className="text-sm font-bold font-Poppins">Save</span>
           </button>
         )}
+        <p className="text-text-default font-Poppins font-bold p-4">
+          {saveText}
+        </p>
       </div>
     </div>
   );

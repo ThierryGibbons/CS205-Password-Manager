@@ -18,7 +18,7 @@ export interface PasswordEntry {
 interface PasswordContextType {
   passwords: PasswordEntry[];
   addPassword: (newPassword: PasswordEntry) => void;
-  updatePassword: (id: number, newPassword: PasswordEntry) => void;
+  updatePassword: (id: number, newPassword: PasswordEntry) => Promise<any>;
   deletePassword: (site: string) => void;
 }
 
@@ -96,51 +96,61 @@ export const PasswordProvider: React.FC<PasswordProviderProps> = ({
   };
 
   // Update Password
-  const updatePassword = (id: number, newPassword: PasswordEntry) => {
-    const updatedPasswords = passwords.map((password) =>
-      password.id === id
-        ? {
-            ...password,
-            site: newPassword.site || password.site,
-            url: newPassword.url || password.url,
-            user: newPassword.user || password.user,
-            password: newPassword.password || password.password,
-            notes: newPassword.notes || password.notes,
-          }
-        : password
-    );
-    setPasswords(updatedPasswords);
+  function updatePassword(
+    id: number,
+    newPassword: PasswordEntry
+  ): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const updatedPasswords = passwords.map((password) =>
+        password.id === id
+          ? {
+              ...password,
+              site: newPassword.site || password.site,
+              url: newPassword.url || password.url,
+              user: newPassword.user || password.user,
+              password: newPassword.password || password.password,
+              notes: newPassword.notes || password.notes,
+            }
+          : password
+      );
+      setPasswords(updatedPasswords);
 
-    // Update Local Storage & Backend
-    localStorage.setItem("passwords", JSON.stringify(updatedPasswords));
-    // console.log("Updated Passwords: ", updatedPasswords);
+      // Update Local Storage & Backend
+      localStorage.setItem("passwords", JSON.stringify(updatedPasswords));
+      // console.log("Updated Passwords: ", updatedPasswords);
 
-    return fetch("http://127.0.0.1:5000/itemsU", {
-      method: "POST",
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id: id,
-        site: newPassword.site,
-        url: newPassword.url,
-        user: newPassword.user,
-        password: newPassword.password,
-        notes: newPassword.notes,
-      }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
+      fetch("http://127.0.0.1:5000/itemsU", {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: id,
+          site: newPassword.site,
+          url: newPassword.url,
+          user: newPassword.user,
+          password: newPassword.password,
+          notes: newPassword.notes,
+        }),
       })
-      .catch((error) => {
-        console.error("Error fetching data: ", error);
-        return "failed";
-      });
-  };
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then(() => {
+          resolve("success");
+          console.log("id: ", id);
+        })
+        .catch((error) => {
+          console.error("Error fetching data: ", error);
+          console.log("id: ", id);
+          reject("failed");
+        });
+    });
+  }
 
   // Delete Password
   const deletePassword = (site: string) => {
