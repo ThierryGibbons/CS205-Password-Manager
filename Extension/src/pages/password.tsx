@@ -1,14 +1,5 @@
 import { usePasswords } from "../components/PasswordData";
 
-// Not Used
-interface PasswordEntry {
-  site: string;
-  url: string;
-  user: string;
-  password: string;
-  notes: string;
-}
-
 const PasswordPage = () => {
   const { passwords } = usePasswords();
 
