@@ -1,22 +1,7 @@
-import { useEffect, useState } from "react";
-import { GetData } from "../components/PasswordData";
-
-interface PasswordEntry {
-  site: string;
-  url: string;
-  user: string;
-  password: string;
-  notes: string;
-}
+import { usePasswords } from "../components/PasswordData";
 
 const PasswordPage = () => {
-  const [passwords, setPasswords] = useState<PasswordEntry[]>([]);
-
-  GetData();
-  useEffect(() => {
-    setPasswords(JSON.parse(localStorage.getItem("passwords") || "[]"));
-    console.log("passwords", passwords);
-  }, []);
+  const { passwords } = usePasswords();
 
   return (
     <div>

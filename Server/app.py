@@ -1,7 +1,9 @@
+from __future__ import print_function # In python 2.7
 from flask import Flask, request, jsonify, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 import os
+import sys
 
 app = Flask(__name__, static_folder='dist')
 CORS(app)
@@ -97,6 +99,7 @@ def update_item():
         notes = request.json.get('notes')
         if not _id:
             return jsonify({"success": False, "response": "Missing required data"}), 400
+        print('failed here', file=sys.stderr)
         item = Item.query.filter_by(_id=_id).first()
         if item is None:
             return jsonify({"success": False, "response": "Item not found"}), 404

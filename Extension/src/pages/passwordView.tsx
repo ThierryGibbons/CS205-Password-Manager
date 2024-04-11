@@ -1,101 +1,88 @@
 import { useEffect, useState } from "react";
-import { GetData, UpdateData, DeleteData } from "../components/PasswordData";
+import { usePasswords } from "../components/PasswordData";
 import Generate from "../components/Generate";
-
-interface PasswordEntry {
-  id: number;
-  site: string;
-  url: string;
-  user: string;
-  password: string;
-  notes: string;
-}
 
 const PasswordView = () => {
   const [hash, setHash] = useState("");
   const [edit, setEdit] = useState(false);
+  const [saveText, setSaveText] = useState("");
 
+  const [id, setId] = useState(0);
   const [site, setSite] = useState("");
   const [url, setUrl] = useState("");
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
   const [notes, setNotes] = useState("");
 
-  GetData();
-
   // Get # path from URL
   useEffect(() => {
     setHash(window.location.hash);
   }, []);
 
-  const [passwords, setPasswords] = useState<PasswordEntry[]>([]);
-
-  useEffect(() => {
-    setPasswords(JSON.parse(localStorage.getItem("passwords") || "[]"));
-  }, []);
+  const { passwords, updatePassword, deletePassword } = usePasswords();
 
   // Convert #pwdView-Site to Site
   const currentSite = hash.replace("#pwdView-", "");
 
-  const siteInput = document.getElementById("site") as HTMLInputElement;
-  const urlInput = document.getElementById("url") as HTMLInputElement;
-  const userInput = document.getElementById("user") as HTMLInputElement;
-  const passwordInput = document.getElementById("password") as HTMLInputElement;
-  const notesInput = document.getElementById("notes") as HTMLInputElement;
-
-  const editButton = () => {
-    setEdit(true);
-
-    // Toggle edit fields
-    siteInput.readOnly = false;
-    urlInput.readOnly = false;
-    userInput.readOnly = false;
-    passwordInput.readOnly = false;
-    notesInput.readOnly = false;
-  };
+  const [shouldUpdate, setShouldUpdate] = useState(false);
 
   const saveButton = () => {
-    console.log("Save Button");
-    setEdit(false);
-    siteInput.readOnly = true;
-    urlInput.readOnly = true;
-    userInput.readOnly = true;
-    passwordInput.readOnly = true;
-    notesInput.readOnly = true;
-
-    // Save data to server
     const passwordEntry = passwords.find((entry) => entry.site === currentSite);
     if (passwordEntry) {
-      const id = passwordEntry.id;
-      // Use id...
-      UpdateData(
-        id,
-        siteInput.value,
-        urlInput.value,
-        userInput.value,
-        passwordInput.value,
-        notesInput.value
-      );
-      console.log(
-        "Updated data",
-        id,
-        "\nsite",
-        siteInput.value,
-        "\nurl",
-        urlInput.value,
-        "\nuser",
-        userInput.value,
-        "\npassword",
-        passwordInput.value,
-        "\nnotes",
-        notesInput.value
-      );
+      setId(passwordEntry.id);
     }
+
+    setShouldUpdate(true);
   };
+
+  useEffect(() => {
+    if (shouldUpdate) {
+      // Save data
+      const updatedPassword = {
+        id: id,
+        site: site,
+        url: url,
+        user: user,
+        password: password,
+        notes: notes,
+      };
+      updatePassword(id, updatedPassword)
+        .then((data: string) => {
+          if (data === "success") {
+            try {
+              // Toggle edit fields
+              setEdit(false);
+              // set save text to "Saved"
+              setSaveText("");
+              console.log("Saved");
+              // Clear values
+              setSite("");
+              setUrl("");
+              setUser("");
+              setPassword("");
+              setNotes("");
+            } catch (error) {
+              console.log(
+                "Cannot set properties of null (reading 'readOnly')\n",
+                error
+              );
+            }
+          }
+        })
+        .catch((error: any) => {
+          console.log("Failed to update passwords:", error);
+          setSaveText("Failed to save");
+        });
+
+      // Reset shouldUpdate to false after the update is done
+      setShouldUpdate(false);
+    }
+  }, [shouldUpdate]); // This effect runs whenever `shouldUpdate` changes
 
   const deleteButton = () => {
     // Delete data from server
-    DeleteData(currentSite);
+    deletePassword(currentSite);
+    window.location.href = "#";
   };
 
   return (
@@ -129,7 +116,7 @@ const PasswordView = () => {
                   <input
                     id="site"
                     className="bg-transparent placeholder-text-200 text-center"
-                    readOnly={true}
+                    readOnly={!edit}
                     placeholder={entry.site}
                     value={site}
                     onChange={(e) => setSite(e.target.value)}
@@ -139,7 +126,7 @@ const PasswordView = () => {
                   <input
                     id="url"
                     className="bg-transparent placeholder-text-200 text-center"
-                    readOnly={true}
+                    readOnly={!edit}
                     placeholder={entry.url}
                     value={url}
                     onChange={(e) => setUrl(e.target.value)}
@@ -149,7 +136,7 @@ const PasswordView = () => {
                   <input
                     id="user"
                     className="bg-transparent placeholder-text-200 text-center"
-                    readOnly={true}
+                    readOnly={!edit}
                     placeholder={entry.user}
                     value={user}
                     onChange={(e) => setUser(e.target.value)}
@@ -159,7 +146,7 @@ const PasswordView = () => {
                   <input
                     id="password"
                     className="bg-transparent placeholder-text-200 text-center"
-                    readOnly={true}
+                    readOnly={!edit}
                     placeholder={entry.password}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
@@ -192,7 +179,7 @@ const PasswordView = () => {
                   <input
                     id="notes"
                     className="bg-transparent placeholder-text-200 text-center"
-                    readOnly={true}
+                    readOnly={!edit}
                     placeholder={entry.notes}
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
@@ -201,6 +188,10 @@ const PasswordView = () => {
               </div>
             </div>
           );
+        } else {
+          <h1 className="font-Poppins font-bold text-text-default p-18">
+            Failed to load
+          </h1>;
         }
       })}
       {/* Footer Buttons */}
@@ -229,7 +220,10 @@ const PasswordView = () => {
         {!edit ? (
           <button
             className="bg-primary-default p-4 rounded-lg flex items-center justify-end gap-2"
-            onClick={editButton}
+            onClick={() => {
+              setEdit(true);
+              setSaveText("");
+            }}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -269,6 +263,9 @@ const PasswordView = () => {
             <span className="text-sm font-bold font-Poppins">Save</span>
           </button>
         )}
+        <p className="text-text-default font-Poppins font-bold p-4">
+          {saveText}
+        </p>
       </div>
     </div>
   );
