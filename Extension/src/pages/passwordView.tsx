@@ -54,6 +54,7 @@ const PasswordView = () => {
   const deleteButton = () => {
     // Delete data from server
     deletePassword(currentSite);
+    window.location.href = "#";
   };
 
   return (
@@ -159,6 +160,10 @@ const PasswordView = () => {
               </div>
             </div>
           );
+        } else {
+          <h1 className="font-Poppins font-bold text-text-default p-18">
+            Failed to load
+          </h1>;
         }
       })}
       {/* Footer Buttons */}

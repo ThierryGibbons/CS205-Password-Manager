@@ -75,6 +75,17 @@ function App() {
             }
           />
         ))}
+        <Route
+          path="*"
+          element={
+            <>
+              <NavBar v="Password" />
+              <h1 className="font-Poppins font-bold text-text-default p-18">
+                Page not found.
+              </h1>
+            </>
+          }
+        />
       </Routes>
     </>
   );
