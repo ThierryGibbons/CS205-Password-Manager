@@ -53,7 +53,7 @@ const PasswordView = () => {
               // Toggle edit fields
               setEdit(false);
               // set save text to "Saved"
-              setSaveText("Saved");
+              setSaveText("");
               console.log("Saved");
               // Clear values
               setSite("");
@@ -220,7 +220,10 @@ const PasswordView = () => {
         {!edit ? (
           <button
             className="bg-primary-default p-4 rounded-lg flex items-center justify-end gap-2"
-            onClick={() => setEdit(true)}
+            onClick={() => {
+              setEdit(true);
+              setSaveText("");
+            }}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
