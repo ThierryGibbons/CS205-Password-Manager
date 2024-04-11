@@ -24,52 +24,6 @@ const PasswordView = () => {
   // Convert #pwdView-Site to Site
   const currentSite = hash.replace("#pwdView-", "");
 
-  // const saveButton = () => {
-  //   const passwordEntry = passwords.find((entry) => entry.site === currentSite);
-  //   if (passwordEntry) {
-  //     setId(passwordEntry.id);
-  //     useEffect(() => {
-  //       console.log(
-  //         "initial test\nid: ",
-  //         id,
-  //         "\npasswordEntry.id: ",
-  //         passwordEntry.id
-  //       );
-  //     });
-  //   }
-
-  //   // Save data
-  //   const updatedPassword = {
-  //     id: id,
-  //     site: site,
-  //     url: url,
-  //     user: user,
-  //     password: password,
-  //     notes: notes,
-  //   };
-  //   console.log("b4 id: ", id);
-  //   updatePassword(id, updatedPassword)
-  //     .then((data: string) => {
-  //       if (data === "success") {
-  //         try {
-  //           // Toggle edit fields
-  //           setEdit(false);
-  //           // set save text to "Saved"
-  //           setSaveText("Saved");
-  //           console.log("Saved");
-  //         } catch (error) {
-  //           console.log(
-  //             "Cannot set properties of null (reading 'readOnly')\n",
-  //             error
-  //           );
-  //         }
-  //       }
-  //     })
-  //     .catch((error: any) => {
-  //       console.log("Failed to update passwords:", error);
-  //       setSaveText("Failed to save");
-  //     });
-  // };
   const [shouldUpdate, setShouldUpdate] = useState(false);
 
   const saveButton = () => {
@@ -92,7 +46,6 @@ const PasswordView = () => {
         password: password,
         notes: notes,
       };
-      console.log("b4 id: ", id);
       updatePassword(id, updatedPassword)
         .then((data: string) => {
           if (data === "success") {
