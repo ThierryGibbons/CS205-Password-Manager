@@ -55,6 +55,12 @@ const PasswordView = () => {
               // set save text to "Saved"
               setSaveText("Saved");
               console.log("Saved");
+              // Clear values
+              setSite("");
+              setUrl("");
+              setUser("");
+              setPassword("");
+              setNotes("");
             } catch (error) {
               console.log(
                 "Cannot set properties of null (reading 'readOnly')\n",
