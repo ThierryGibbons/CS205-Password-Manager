@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { GetData } from "../components/PasswordData";
+import Generate from "../components/Generate";
 
 const PasswordNew = () => {
   const [site, setSite] = useState("");
@@ -88,13 +89,35 @@ const PasswordNew = () => {
               onChange={(e) => setUser(e.target.value)}
             ></input>
           </div>
-          <div className="font-Poppins font-bold bg-background-900 text-text-default p-3 m-2 rounded-lg w-[60vw] items-center">
+          <div className="font-Poppins font-bold bg-background-900 text-text-default p-3 m-2 rounded-lg w-[60vw] flex items-center">
             <input
               className="bg-transparent placeholder-text-800 text-center"
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             ></input>
+            <button
+              className=""
+              onClick={() => {
+                // Generate a random password
+                setPassword(Generate());
+              }}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-4 h-4"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"
+                />
+              </svg>
+            </button>
           </div>
           <div className="font-Poppins font-bold bg-background-900 text-text-default p-3 m-2 rounded-lg w-[60vw] items-center">
             <input
