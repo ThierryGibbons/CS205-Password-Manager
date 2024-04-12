@@ -5,7 +5,10 @@ const Navbar: React.FC = () => {
   return (
     <>
       <nav className="p-4">
-        <div className=" lg:container lg:mx-auto lg:flex lg:justify-between lg:items-center text-center ">
+        <div className="lg:hidden text-center">
+          <p className="lg:hidden text-text-default text-4xl font-bold font-Poppins">Passwords Made Easy</p>
+        </div>
+        <div className="hidden text-center lg:container lg:mx-auto lg:flex lg:justify-between lg:items-center">
           <a
             href="/"
             className="text-text-default hover:text-accent-default text-4xl lg:text-2xl font-bold font-Poppins"
