@@ -15,87 +15,126 @@ npm -v
 
 ## Installation
 
-Follow these steps to install **Project Name**:
+Follow these steps to install **Password Manager**:
 
-1. Clone the repository:
+### Clone the repository:
 ```
 git clone https://github.com/ThierryGibbons/CS205-Password-Manager.git
 ```
 
-2. Navigate to the project directory:
-```
-cd './Passwords Made Easy'
-```
+### Backend
 
-3. Install dependencies with npm:
-```
-npm install
-```
-4. Create a Python virtual environment for the Flask backend:
-```
-python3 -m venv venv
-```
-5. Activate the virtual environment:
+1. Navigate to the server directory:
+    ```
+    cd './Server'
+    ```
 
-On Windows 
-```
-.\venv\Scripts\activate
-```
-On macOS/Linux
-```
-source venv/bin/activate
-```
-6. Install Flask within the virtual environment:
-```
-pip install Flask
-```
+2. Create a Python virtual environment for the Flask backend:
+    ```
+    python3 -m venv venv
+    ```
+
+3. Activate the virtual environment:
+    ```
+    .\venv\Scripts\activate #On Windows
+
+    source venv/bin/activate #On macOS/Linux
+    ```
+
+4. Install Flask & dependencies within the virtual environment:
+    ```
+    pip install Flask Flask-SQLAlchemy Flask-CORS
+    ```
+
+### Website
+
+1. Navigate to the website directory:
+    ```
+    cd './Passwords Made Easy'
+    ```
+
+2. Install dependencies with npm:
+    ```
+    npm install
+    ```
 
 ## Running the Project
 
 After installation, you can run the project locally:
 
-Frontend
-```
-npm run dev
-```
-Backend
-```
-python3 app.py
-```
+### Backend
 
+1. Navigate to the server directory:
+    ```
+    cd './Server'
+    ```
 
-This command will start a local development server.
+2. Activate the virtual environment:
+    ```
+    .\venv\Scripts\activate #On Windows
+    source venv/bin/activate #On macOS/Linux
+    ```
+
+3. Run the Flask server:
+    ```
+    flask run
+    ```
+
+### Frontend - Website
+*Ensure the Flask server is running before starting the frontend.*
+
+1. Navigate to the `Passwords Made Easy` directory:
+    ```
+    cd './Passwords Made Easy'
+    ```
+
+2. Run the development server:
+    ```
+    npm run dev
+    ```
+
+### Frontend - Extension
+*Ensure the Flask server is running before starting the frontend.*
+
+1. Navigate to the `Extension` directory:
+    ```
+    cd './Extension'
+    ```
+
+2. Run the development server:
+    ```
+    npm run dev
+    ```
+    *This command will start a local development server.*
 
 ## Building for Production
 
 ### Website
 
-Within the `Passwords Made Easy` directory, run:
-```
-npm run build
-```
+1. Within the `Passwords Made Easy` directory, run:
+    ```
+    npm run build
+    ```
+    *This will generate a `dist/` directory with your compiled project.*
 
-This will generate a `dist/` directory with your compiled project.
+2. Move this dist/ directory to the `Server` directory.
 
-Move this dist/ directory to the `Server` directory.
-
-Within the `Server` directory, open the virtual environment and run:
-```
-flask run
-```
+3. Within the `Server` directory, open the virtual environment and run:
+    ```
+    flask run
+    ```
 
 ### Extension
 
-Within the `Extension` directory, run:
-```
-npm run build
-```
+1. Within the `Extension` directory, run:
+    ```
+    npm run build
+    ```
+    *This will generate a `dist/` directory with your compiled project.*
 
-This will generate a `dist/` directory with your compiled project.
+2. Load the extension into Chrome, navigate to `chrome://extensions/` and enable Developer Mode.
 
-To load the extension into Chrome, navigate to `chrome://extensions/` and enable Developer Mode.
-
-Click "Load unpacked" and select the `dist/` directory.
+3. Click "Load unpacked" and select the `dist/` directory.
 
 ## Contributing
 
