@@ -1,5 +1,6 @@
 import InteractiveText from "../components/InteractiveText";
 import LoginButton from "../components/login";
+import LogoutButton from "../components/logout";
 
 const HomePage = () => {
   return (
@@ -29,6 +30,7 @@ const HomePage = () => {
         <div className="flex flex-col justify-center">
           <h1 className=" text-xl text-center whitespace-pre font-poppins font-medium text-primary-default">
             <LoginButton />
+            <LogoutButton />
           </h1>
         </div>
       </div>
