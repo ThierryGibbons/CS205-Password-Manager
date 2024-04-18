@@ -6,7 +6,9 @@ const Navbar: React.FC = () => {
     <>
       <nav className="p-4">
         <div className="lg:hidden text-center">
-          <p className="lg:hidden text-text-default text-4xl font-bold font-Poppins">Passwords Made Easy</p>
+          <p className="lg:hidden text-text-default text-4xl font-bold font-Poppins">
+            Passwords Made Easy
+          </p>
         </div>
         <div className="hidden text-center lg:container lg:mx-auto lg:flex lg:justify-between lg:items-center">
           <a
