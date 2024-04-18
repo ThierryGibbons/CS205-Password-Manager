@@ -31,3 +31,5 @@ instance/
 *.njsproj
 *.sln
 *.sw?
+CS205-Password-Manager.code-workspace
+Passwords Made Easy/.env
