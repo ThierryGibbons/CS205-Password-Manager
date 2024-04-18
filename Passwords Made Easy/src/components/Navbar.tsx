@@ -7,27 +7,18 @@ const Navbar: React.FC = () => {
     <>
       <nav className="p-4">
         <div className="container mx-auto flex justify-between items-center">
-          <a
-            href="/"
-            className="text-text-default hover:text-accent-default text-2xl font-bold font-Poppins"
-          >
+          <Link to="/" className="text-text-default hover:text-accent-default text-2xl font-bold font-Poppins">
             <InteractiveText originalText="Passwords" />{" "}
             <InteractiveText originalText="Made" />{" "}
             <InteractiveText originalText="Easy" />
-          </a>
+          </Link>
           <div>
-            <a
-              href="/blog"
-              className="px-3 py-2 rounded text-text-default hover:text-accent-default font-Poppins font-light text-xl"
-            >
+            <Link to="/blog" className="px-3 py-2 rounded text-text-default hover:text-accent-default font-Poppins font-light text-xl">
               Blog
-            </a>
-            <a
-              href="/account"
-              className="px-3 py-2 rounded text-text-default hover:text-accent-default font-Poppins font-light text-xl"
-            >
+            </Link>
+            <Link to="/account" className="px-3 py-2 rounded text-text-default hover:text-accent-default font-Poppins font-light text-xl">
               Account
-            </a>
+            </Link>
           </div>
         </div>
       </nav>
