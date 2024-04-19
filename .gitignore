@@ -31,3 +31,4 @@ instance/
 *.njsproj
 *.sln
 *.sw?
+Passwords Made Easy/.env
