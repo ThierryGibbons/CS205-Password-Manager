@@ -19,18 +19,19 @@ const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
   <React.StrictMode>
 <Auth0Provider
-    domain={auth0Domain}
-    clientId={auth0ClientId}
-    authorizationParams={{
-        redirect_uri: auth0RedirectUri
-    }}
-    onRedirectCallback={onRedirectCallback}
-    cacheLocation="memory"
+  domain={auth0Domain}
+  clientId={auth0ClientId}
+  redirectUri={auth0RedirectUri}
+  onRedirectCallback={onRedirectCallback}
+  scope="openid profile email"
+  audience="YOUR_API_IDENTIFIER" // Only if you need to interact with an Auth0-protected API
+  cacheLocation="memory"
 >
-    <BrowserRouter>
-        <App />
-    </BrowserRouter>
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
 </Auth0Provider>
+
 
   </React.StrictMode>
 );
