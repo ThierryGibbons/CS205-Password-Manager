@@ -121,7 +121,7 @@ def update_item():
         return jsonify({"success": False, "response": "Failed to update item"}), 500
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(debug=True, use_reloader=True, port=5000, threaded=True)
 
 

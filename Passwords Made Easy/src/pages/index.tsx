@@ -1,6 +1,9 @@
 import InteractiveText from "../components/InteractiveText";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const HomePage = () => {
+  const { loginWithRedirect } = useAuth0();
+
   return (
     <>
       <div
@@ -20,24 +23,35 @@ const HomePage = () => {
             <InteractiveText originalText="PEOPLE" />
             <br />
             <span className="font-thin italic">
-              <InteractiveText originalText="Thats Us"></InteractiveText>
+              <InteractiveText originalText="That's Us" />
               {".."}
             </span>
           </h1>
         </div>
+
         <div className="flex flex-col justify-center">
-          <h1 className=" text-xl text-center whitespace-pre font-poppins font-medium text-primary-default">
-            <a href="/getstarted">{">>>        Get Started        <<<"}</a>
-          </h1>
+          <button
+            className="text-xl text-center whitespace-pre font-poppins font-medium text-primary-default cursor-pointer"
+            onClick={() => loginWithRedirect()}
+          >
+            {">>> Get Started <<<"}
+          </button>
         </div>
       </div>
       <div
         className="w-3/4 pt-20 text-center lg:hidden"
         style={{ height: `calc(100vh - 192px)` }}
       >
-          <p className="text-wrap text-3xl whitespace-pre font-poppins font-medium text-primary-default ">It looks like you're viewing this page from a mobile device..</p>
-          <p className="text-wrap pt-5 text-xl whitespace-pre font-poppins font-medium text-text-default">'Passwords Made Easy' is built to be utilized in a desktop environment, and is not built to function on mobile phones. <br /> <br />
-            Please re-open this page on a desktop machine to make ideal use of the service!</p>
+        <p className="text-wrap text-3xl whitespace-pre font-poppins font-medium text-primary-default ">
+          It looks like you're viewing this page from a mobile device..
+        </p>
+        <p className="text-wrap pt-5 text-xl whitespace-pre font-poppins font-medium text-text-default">
+          'Passwords Made Easy' is built to be utilized in a desktop
+          environment, and is not built to function on mobile phones. <br />{" "}
+          <br />
+          Please re-open this page on a desktop machine to make ideal use of the
+          service!
+        </p>
       </div>
     </>
   );
