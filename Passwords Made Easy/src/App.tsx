@@ -5,7 +5,6 @@ import Navbar from "./components/Navbar";
 
 // Pages
 import HomePage from "./pages/index";
-import BlogPage from "./pages/blog";
 import AccountPage from "./pages/account";
 import CallbackHandler from "./components/CallbackHandler";
 
@@ -19,7 +18,6 @@ function App() {
         <div className="flex-1 flex items-center justify-center">
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/blog" element={<BlogPage />} />
             <Route
               path="/account"
               element={
