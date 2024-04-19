@@ -33,11 +33,7 @@ cd './Passwords Made Easy'
 npm install
 ```
 
-3. Install additional Python packages required for Auth0 integration and backend functionality:
 
-```
-pip install authlib python-dotenv Flask-CORS requests
-```
 
 ### Backend
 
@@ -51,7 +47,7 @@ cd './Server'
 python3 -m venv venv
 ```
 
-. Activate the virtual environment:
+3. Activate the virtual environment:
 
 On Windows 
 ```
@@ -61,10 +57,10 @@ On macOS/Linux
 ```
 source venv/bin/activate
 ```
+3. Install additional Python packages required for Auth0 integration and backend functionality:
 
-4. Install Flask & dependencies within the virtual environment:
 ```
-pip install Flask Flask-SQLAlchemy Flask-CORS
+pip install authlib python-dotenv Flask-CORS requests Flask Flask-SQLAlchemy
 ```
 
 ## Running the Project
@@ -72,7 +68,6 @@ pip install Flask Flask-SQLAlchemy Flask-CORS
 After installation, you can run the project locally:
 
 ### Client
-*Ensure the Flask server is running before starting the frontend.*
 
 1. Navigate to the `Passwords Made Easy` directory:
 ```
@@ -104,7 +99,7 @@ source venv/bin/activate
 
 3. Run the Flask server:
 ```
-flask run
+python3 app.py
 ```
 
 
@@ -125,7 +120,7 @@ npm run dev
 
 ## Building for Production
 
-### Website
+### Client
 
 1. Within the `Passwords Made Easy` directory, run:
 ```
@@ -134,15 +129,25 @@ npm run build
 *This will generate a `dist/` directory with your compiled project.*
 
 2. Move this dist/ directory to the `Server` directory.
-
-3. Within the `Server` directory, open the virtual environment and run:
 ```
-flask run
-```
+cp -r ./dist ../Server
+````
 
+### Backend
+
+3. Within the `Server` directory, open the virtual environment,
+```
+source venv/bin/activate
+```
+4. then run:
+```
+flask run --host=localhost --port=5173
+```
 ### Extension
 
 1. Within the `Extension` directory, run:
+
+
 ```
 npm run build
 ```
