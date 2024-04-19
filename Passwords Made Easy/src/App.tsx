@@ -7,7 +7,6 @@ import Navbar from "./components/Navbar";
 import HomePage from "./pages/index";
 import BlogPage from "./pages/blog";
 import AccountPage from "./pages/account";
-import GetStartedPage from "./pages/getstarted";
 import CallbackHandler from "./components/CallbackHandler";
 
 function App() {
@@ -29,7 +28,6 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            <Route path="/getstarted" element={<GetStartedPage />} />
             <Route path="/callback" element={<CallbackHandler />} />
           </Routes>
         </div>

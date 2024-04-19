@@ -1,9 +1,6 @@
 import InteractiveText from "../components/InteractiveText";
-import { useAuth0 } from "@auth0/auth0-react";
 
 const HomePage = () => {
-  const { loginWithRedirect } = useAuth0();
-
   return (
     <>
       <div
@@ -27,15 +24,6 @@ const HomePage = () => {
               {".."}
             </span>
           </h1>
-        </div>
-
-        <div className="flex flex-col justify-center">
-          <button
-            className="text-xl text-center whitespace-pre font-poppins font-medium text-primary-default cursor-pointer"
-            onClick={() => loginWithRedirect()}
-          >
-            {">>> Get Started <<<"}
-          </button>
         </div>
       </div>
       <div
