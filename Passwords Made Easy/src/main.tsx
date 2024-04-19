@@ -9,15 +9,6 @@ const auth0Domain = import.meta.env.VITE_AUTH0_DOMAIN;
 const auth0ClientId = import.meta.env.VITE_AUTH0_CLIENT_ID;
 const auth0RedirectUri = import.meta.env.VITE_AUTH0_REDIRECT_URI;
 
-// const onRedirectCallback = (appState: { returnTo: any }) => {
-//   console.log("onRedirectCallback called with appState:", appState);
-//   window.history.replaceState(
-//     {},
-//     document.title,
-//     appState?.returnTo || "/account"
-//   );
-// };
-
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
   <React.StrictMode>
@@ -25,8 +16,6 @@ root.render(
       domain={auth0Domain}
       clientId={auth0ClientId}
       authorizationParams={{ redirect_uri: auth0RedirectUri }}
-      // redirectUri={auth0RedirectUri}
-      // onRedirectCallback={onRedirectCallback} // This might need to be updated because we are using react-router
     >
       <BrowserRouter>
         <App />
