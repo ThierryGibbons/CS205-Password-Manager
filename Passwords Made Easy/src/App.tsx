@@ -1,4 +1,3 @@
-import React from "react";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -9,8 +8,7 @@ import HomePage from "./pages/index";
 import BlogPage from "./pages/blog";
 import AccountPage from "./pages/account";
 import GetStartedPage from "./pages/getstarted";
-import CallbackHandler from './components/CallbackHandler';
-
+import CallbackHandler from "./components/CallbackHandler";
 
 function App() {
   return (
@@ -23,11 +21,14 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/blog" element={<BlogPage />} />
-            <Route path="/account" element={
-              <ProtectedRoute>
-                <AccountPage />
-              </ProtectedRoute>
-            } />
+            <Route
+              path="/account"
+              element={
+                <ProtectedRoute>
+                  <AccountPage />
+                </ProtectedRoute>
+              }
+            />
             <Route path="/getstarted" element={<GetStartedPage />} />
             <Route path="/callback" element={<CallbackHandler />} />
           </Routes>
