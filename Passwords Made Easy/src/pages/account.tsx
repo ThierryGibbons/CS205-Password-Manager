@@ -15,10 +15,10 @@ const Profile = () => {
 
   return (
     isAuthenticated && (
-      <div className="grid grid-rows-2 w-full max-w-md mx-auto" style={{ height: `calc(100vh - 96px)` }}>
+      <div className="grid grid-rows-3 w-full max-w-md mx-auto" style={{ height: `calc(100vh - 96px)` }}>
         {/* Account Title */}
         <div className="row-span-1">
-          <h1 className="font-bold text-4xl text-center text-primary-default pt-4">
+          <h1 className="font-bold text-4xl mt-14 text-center text-primary-default pt-4">
             Account
           </h1>
         </div>
