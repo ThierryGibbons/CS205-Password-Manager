@@ -1,7 +1,6 @@
 import InteractiveText from "../components/InteractiveText";
 import LoginButton from "../components/login";
 import LogoutButton from "../components/logout";
-import Profile from "../components/Profile";
 
 const HomePage = () => {
   return (

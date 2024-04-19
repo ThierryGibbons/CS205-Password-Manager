@@ -10,7 +10,7 @@ const Profile = () => {
 
   if (!isAuthenticated || !user) {
     console.log("No user data available.");
-    // return <div>No user data available.</div>;
+    return <div>No user data available.</div>;
   }
 
   isAuthenticated && console.log(user);
