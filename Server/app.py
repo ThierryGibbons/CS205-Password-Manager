@@ -52,9 +52,14 @@ def serve(path):
 @app.route('/users', methods=['POST'])
 def add_user():
     try:
+        # Get the userId and email from the request
         userId = request.json.get('userId')
+        email = request.json.get('email')
+
+        # Process User ID
         if userId is not None:
             userId = userId.strip('"')
+            print('userId: ', userId, file=sys.stderr)
         else:
             return jsonify({"success": False, "response": "Missing userId"}), 400
         # Check if user not already in database
@@ -62,7 +67,14 @@ def add_user():
         if userValid is not None:
             print('user already exists', file=sys.stderr)
             return jsonify({"success": False, "response": "User already exists"}), 409
-        user = User(userId=userId)
+
+
+        # Process Email
+        if email is not None:
+            email = email.strip('"')
+
+        user = User(userId=userId, userEmail=email) # Create a new user object
+
         print('new user: ', user, file=sys.stderr)
         db.session.add(user)
         db.session.commit()
@@ -82,14 +94,15 @@ def get_email():
     print('req userId: ', userId, file=sys.stderr)
     # Check if user exists
     userValid = User.query.filter_by(userId=userId).first()
+    print('userValid: ', file=sys.stderr)
     if userValid is None:
         print('user not found', file=sys.stderr)
         return jsonify({"success": False, "response": "User not found"}), 404
-    email = User.query.filter_by(userId=userId).first()
+
+    email = userValid.userEmail  # Get the email directly from the userValid object
     if email is None:
         return jsonify({"success": False, "response": "No email found"}), 404
     else:
-        email = User.query.filter_by(userId=userId).first().userEmail
         print('email: ', email, file=sys.stderr)
         return jsonify({"success": True, "response": email})
 
