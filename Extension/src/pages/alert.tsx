@@ -1,9 +1,9 @@
 const AlertPage = () => {
-  // clear the local storage
-  localStorage.clear();
   return (
     <div>
-      <h1 className="font-Poppins font-bold p-18">Alert Page</h1>
+      <h1 className="font-Poppins text-text-default font-bold p-18">
+        Alert Page
+      </h1>
     </div>
   );
 };
