@@ -22,7 +22,9 @@ const AccountPage = () => {
 
   return (
     <div>
-      <h1 className="font-Poppins font-bold p-18">Account Page</h1>
+      <h1 className="font-Poppins text-text-default font-bold p-18">
+        Account Page
+      </h1>
       <div className="font-Poppins font-bold bg-background-900 text-text-default p-3 m-2 rounded-lg w-[60vw] items-center">
         <input
           className="bg-transparent placeholder-text-800 text-center"
