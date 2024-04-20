@@ -25,6 +25,14 @@ class Item(db.Model):
         # return '<Item %r>' % self.user
         return f"Item('{self.site}', '{self.url}', '{self.user}', '{self.password}', '{self.notes}')"
 
+class User(db.Model):
+    _id = db.Column("id", db.Integer, primary_key=True) # Gives each user a unique ID
+    userId = db.Column(db.String(100))
+
+    def __repr__(self):
+        return f"User('{self.userId}')"
+
+
 with app.app_context():
     db.create_all()
 
@@ -39,11 +47,35 @@ def serve(path):
         return app.send_static_file(path)
     return send_from_directory('dist', 'index.html')
 
+# Add a user
+@app.route('/users', methods=['POST'])
+def add_user():
+    try:
+        userId = request.json.get('userId').strip('"')
+        if not userId:
+            return jsonify({"success": False, "response": "Missing required data"}), 400
+        # Check if user not already in database
+        user = User.query.filter_by(userId=userId).first()
+        if user is not None:
+            return jsonify({"success": False, "response": "User already exists"}), 409
+        user = User(userId=userId)
+        print('new user: ', user, file=sys.stderr)
+        db.session.add(user)
+        db.session.commit()
+        return jsonify({"success": True, "response": "User added"}), 201
+    except Exception as e:
+        app.logger.error(f"Failed to add user: {e}")
+        return jsonify({"success": False, "response": "Failed to add user"}), 500
+
 # Get all items
 @app.route('/getItems', methods=['POST'])
 def get_items():
     userId = request.json.get('userId').strip('"')
     print('req userId: ', userId, file=sys.stderr)
+    # Check if user exists
+    user = User.query.filter_by(userId=userId).first()
+    if user is None:
+        return jsonify({"success": False, "response": "User not found"}), 404
     itemsB = Item.query.all()
     items = Item.query.filter_by(userId=userId).all()
     if items is None:
@@ -62,6 +94,10 @@ def add_item():
     try:
         userId = request.json.get('userId').strip('"')
         print('new: ', userId, file=sys.stderr)
+        # Check if user exists
+        user = User.query.filter_by(userId=userId).first()
+        if user is None:
+            return jsonify({"success": False, "response": "User not found"}), 404
         site = request.json.get('site')
         url = request.json.get('url')
         user = request.json.get('user')
@@ -82,6 +118,10 @@ def add_item():
 def remove_item():
     try:
         userId = request.json.get('user')
+        # Check if user exists
+        user = User.query.filter_by(userId=userId).first()
+        if user is None:
+            return jsonify({"success": False, "response": "User not found"}), 404
         site = request.json.get('site')
         if not site:
             return jsonify({"success": False, "response": "Missing required data"}), 400
@@ -100,6 +140,10 @@ def remove_item():
 def update_item():
     try:
         userId = request.json.get('userId').strip('"')
+        # Check if user exists
+        user = User.query.filter_by(userId=userId).first()
+        if user is None:
+            return jsonify({"success": False, "response": "User not found"}), 404
         _id = request.json.get('id')
         site = request.json.get('site')
         url = request.json.get('url')
