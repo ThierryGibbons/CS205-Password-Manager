@@ -6,13 +6,15 @@ const AccountPage = () => {
 
   const handleClick = () => {
     console.log("Save button clicked! ID: ", newId);
-    localStorage.setItem("user", JSON.stringify(newId));
+    // clear local storage
+    localStorage.clear();
+    localStorage.setItem("userId", JSON.stringify(newId));
   };
 
   // if there is a user in local storage, set the id to the user
   useEffect(() => {
-    if (localStorage.getItem("user") !== null) {
-      setId(JSON.parse(localStorage.getItem("user") || ""));
+    if (localStorage.getItem("userId") !== null) {
+      setId(JSON.parse(localStorage.getItem("userId") || ""));
     } else {
       setId("Enter ID here!");
     }

@@ -51,7 +51,7 @@ export const PasswordProvider: React.FC<PasswordProviderProps> = ({
       },
       body: JSON.stringify({
         // User
-        user: localStorage.getItem("user"),
+        userId: localStorage.getItem("userId"),
       }),
     })
       .then((response) => {
@@ -85,6 +85,7 @@ export const PasswordProvider: React.FC<PasswordProviderProps> = ({
       },
       body: JSON.stringify({
         // Data from inputs
+        userId: localStorage.getItem("userId"),
         site: newPassword.site,
         url: newPassword.url,
         user: newPassword.user,
@@ -130,6 +131,7 @@ export const PasswordProvider: React.FC<PasswordProviderProps> = ({
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          userId: localStorage.getItem("userId"),
           id: id,
           site: newPassword.site,
           url: newPassword.url,
@@ -173,6 +175,7 @@ export const PasswordProvider: React.FC<PasswordProviderProps> = ({
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        userId: localStorage.getItem("userId"),
         site: site,
       }),
     })

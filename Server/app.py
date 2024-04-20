@@ -14,6 +14,7 @@ db = SQLAlchemy(app)
 
 class Item(db.Model):
     _id = db.Column("id", db.Integer, primary_key=True) # Gives each user a unique ID
+    userId = db.Column(db.String(100))
     site = db.Column(db.String(100))
     url = db.Column(db.String(100))
     user = db.Column(db.String(100))
@@ -41,32 +42,36 @@ def serve(path):
 # Get all items
 @app.route('/getItems', methods=['POST'])
 def get_items():
-    user = request.json.get('user')
-    print(user, file=sys.stderr)
-    items = Item.query.all()
+    userId = request.json.get('userId').strip('"')
+    print('req userId: ', userId, file=sys.stderr)
+    itemsB = Item.query.all()
+    items = Item.query.filter_by(userId=userId).all()
     if items is None:
         return jsonify({"success": False, "response": "No items found"}), 404
     else:
-        item_list = []
-        item_list = [{"id": item._id, "site": item.site, "url": item.url, "user": item.user, "password": item.password, "notes": item.notes} for item in items]
+        item_list = [{"id": item._id, "userId": item.userId, "site": item.site, "url": item.url, "user": item.user, "password": item.password, "notes": item.notes} for item in items]
+        item_view = [{"userId": item.userId, "site": item.site} for item in items]
+        item_userId = [{itemB.userId} for itemB in itemsB]
+        print('-', item_userId, file=sys.stderr) # Check how many times a user is referenced in the system)
+        print('item_view: ', item_view, file=sys.stderr)
         return jsonify({"success": True, "response": item_list})
 
 # Add an item
 @app.route('/itemsP', methods=['POST'])
 def add_item():
     try:
+        userId = request.json.get('userId').strip('"')
+        print('new: ', userId, file=sys.stderr)
         site = request.json.get('site')
         url = request.json.get('url')
         user = request.json.get('user')
         password = request.json.get('password')
         notes = request.json.get('notes')
-        if not all([site, url, user, password, notes]):
+        if not all([userId, site, url, user, password, notes]):
             return jsonify({"success": False, "response": "Missing required data"}), 400
-        item = Item(site=site, url=url, user=user, password=password, notes=notes)
+        item = Item(userId=userId, site=site, url=url, user=user, password=password, notes=notes)
         db.session.add(item)
         db.session.commit()
-        print(item)
-        print(db.session.query(Item).all())
         return jsonify({"success": True, "response": "Item added"}), 201
     except Exception as e:
         app.logger.error(f"Failed to add item: {e}")
@@ -76,10 +81,11 @@ def add_item():
 @app.route('/itemsD', methods=['POST'])
 def remove_item():
     try:
+        userId = request.json.get('user')
         site = request.json.get('site')
         if not site:
             return jsonify({"success": False, "response": "Missing required data"}), 400
-        item = Item.query.filter_by(site=site).first()
+        item = Item.query.filter_by(site=site, userId=userId).first()
         if item is None:
             return jsonify({"success": False, "response": "Item not found"}), 404
         db.session.delete(item)
@@ -93,6 +99,7 @@ def remove_item():
 @app.route('/itemsU', methods=['POST'])
 def update_item():
     try:
+        userId = request.json.get('userId').strip('"')
         _id = request.json.get('id')
         site = request.json.get('site')
         url = request.json.get('url')
@@ -102,7 +109,7 @@ def update_item():
         if not _id:
             return jsonify({"success": False, "response": "Missing required data"}), 400
         print('failed here', file=sys.stderr)
-        item = Item.query.filter_by(_id=_id).first()
+        item = Item.query.filter_by(_id=_id, userId=userId).first()
         if item is None:
             return jsonify({"success": False, "response": "Item not found"}), 404
         if site:
