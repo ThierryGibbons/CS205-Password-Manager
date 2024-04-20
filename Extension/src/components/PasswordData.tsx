@@ -42,13 +42,17 @@ export const PasswordProvider: React.FC<PasswordProviderProps> = ({
 
   useEffect(() => {
     // Fetch passwords initially and set uo any other lofic needed
-    fetch("http://127.0.0.1:5000/items", {
+    fetch("http://127.0.0.1:5000/getItems", {
       // Make sure the URL matches your Flask server URL
-      method: "GET",
+      method: "POST",
       mode: "cors",
       headers: {
         "Content-Type": "application/json",
       },
+      body: JSON.stringify({
+        // User
+        user: localStorage.getItem("user"),
+      }),
     })
       .then((response) => {
         if (!response.ok) {
@@ -73,7 +77,7 @@ export const PasswordProvider: React.FC<PasswordProviderProps> = ({
     // Update Local Storage & Backend
     localStorage.setItem("passwords", JSON.stringify(updatedPasswords));
 
-    fetch("http://127.0.0.1:5000/items", {
+    fetch("http://127.0.0.1:5000/itemsP", {
       method: "POST",
       mode: "cors",
       headers: {

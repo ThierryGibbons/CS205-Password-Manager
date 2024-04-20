@@ -39,8 +39,10 @@ def serve(path):
     return send_from_directory('dist', 'index.html')
 
 # Get all items
-@app.route('/items', methods=['GET'])
+@app.route('/getItems', methods=['POST'])
 def get_items():
+    user = request.json.get('user')
+    print(user, file=sys.stderr)
     items = Item.query.all()
     if items is None:
         return jsonify({"success": False, "response": "No items found"}), 404
@@ -50,7 +52,7 @@ def get_items():
         return jsonify({"success": True, "response": item_list})
 
 # Add an item
-@app.route('/items', methods=['POST'])
+@app.route('/itemsP', methods=['POST'])
 def add_item():
     try:
         site = request.json.get('site')
