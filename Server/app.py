@@ -28,9 +28,10 @@ class Item(db.Model):
 class User(db.Model):
     _id = db.Column("id", db.Integer, primary_key=True) # Gives each user a unique ID
     userId = db.Column(db.String(100))
+    userEmail = db.Column(db.String(100))
 
     def __repr__(self):
-        return f"User('{self.userId}')"
+        return f"User('{self.userId}', '{self.userEmail}')"
 
 
 with app.app_context():
@@ -69,6 +70,28 @@ def add_user():
     except Exception as e:
         app.logger.error(f"Failed to add user: {e}")
         return jsonify({"success": False, "response": "Failed to add user"}), 500
+
+# Get Email
+@app.route('/getEmail', methods=['POST'])
+def get_email():
+    userId = request.json.get('userId')
+    if userId is not None:
+        userId = userId.strip('"')
+    else:
+        return jsonify({"success": False, "response": "Missing userId"}), 400
+    print('req userId: ', userId, file=sys.stderr)
+    # Check if user exists
+    userValid = User.query.filter_by(userId=userId).first()
+    if userValid is None:
+        print('user not found', file=sys.stderr)
+        return jsonify({"success": False, "response": "User not found"}), 404
+    email = User.query.filter_by(userId=userId).first()
+    if email is None:
+        return jsonify({"success": False, "response": "No email found"}), 404
+    else:
+        email = User.query.filter_by(userId=userId).first().userEmail
+        print('email: ', email, file=sys.stderr)
+        return jsonify({"success": True, "response": email})
 
 # Get all items
 @app.route('/getItems', methods=['POST'])

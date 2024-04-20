@@ -21,6 +21,7 @@ const ThisUser = () => {
       },
       body: JSON.stringify({
         userId: user?.sub,
+        email: user?.email,
       }),
     })
       .then((response) => {
@@ -33,21 +34,6 @@ const ThisUser = () => {
         console.log(data);
       });
   }
-
-  //   return (
-  //     isAuthenticated &&
-  //     user && (
-  //       <ProtectedRoute>
-  //         <h1>{user.sub}</h1>
-  //       </ProtectedRoute>
-  //     )
-  //   );
-
-  //   if (isAuthenticated && user) {
-  //     return <h1>{user.sub}</h1>;
-  //   } else {
-  //     return <h1>Not Authenticated</h1>;
-  //   }
 };
 
 export default ThisUser;
