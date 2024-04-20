@@ -45,6 +45,12 @@ const Navbar = () => {
             >
               Account
             </Link>
+            <Link
+              to="/passwords"
+              className="px-3 py-2 rounded text-text-default hover:text-accent-default font-Poppins font-light text-xl"
+            >
+              Passwords
+            </Link>
           </div>
         </div>
       </nav>

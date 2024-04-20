@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Navbar from "./components/Navbar";
+import PasswordPage from "./pages/passwords";
 
 // Pages
 import HomePage from "./pages/index";
@@ -18,6 +19,7 @@ function App() {
         <div className="flex-1 flex items-center justify-center">
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/passwords" element={<PasswordPage />} />
             <Route
               path="/account"
               element={
