@@ -1,6 +1,8 @@
 import InteractiveText from "../components/InteractiveText";
+import ThisUser from "../components/User";
 
 const HomePage = () => {
+  ThisUser();
   return (
     <>
       <div
