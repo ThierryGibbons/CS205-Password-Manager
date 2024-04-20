@@ -13,7 +13,7 @@ const ThisUser = () => {
 
   if (isAuthenticated && user) {
     console.log("User ID: ", user?.sub);
-    fetch("http://127.0.0.1:5000/users", {
+    fetch("https://teyehree.co.nz/users", {
       method: "POST",
       mode: "cors",
       headers: {

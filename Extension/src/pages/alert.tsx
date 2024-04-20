@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 const AlertPage = () => {
   const [email, setEmail] = useState("");
   const [result, setResult] = useState("");
-  fetch("http://127.0.0.1:5000/getEmail", {
+  fetch("https://teyehree.co.nz/getEmail", {
     method: "POST",
     mode: "cors",
     headers: {
