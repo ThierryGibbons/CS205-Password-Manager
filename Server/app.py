@@ -51,12 +51,15 @@ def serve(path):
 @app.route('/users', methods=['POST'])
 def add_user():
     try:
-        userId = request.json.get('userId').strip('"')
-        if not userId:
-            return jsonify({"success": False, "response": "Missing required data"}), 400
+        userId = request.json.get('userId')
+        if userId is not None:
+            userId = userId.strip('"')
+        else:
+            return jsonify({"success": False, "response": "Missing userId"}), 400
         # Check if user not already in database
-        user = User.query.filter_by(userId=userId).first()
-        if user is not None:
+        userValid = User.query.filter_by(userId=userId).first()
+        if userValid is not None:
+            print('user already exists', file=sys.stderr)
             return jsonify({"success": False, "response": "User already exists"}), 409
         user = User(userId=userId)
         print('new user: ', user, file=sys.stderr)
@@ -70,11 +73,16 @@ def add_user():
 # Get all items
 @app.route('/getItems', methods=['POST'])
 def get_items():
-    userId = request.json.get('userId').strip('"')
+    userId = request.json.get('userId')
+    if userId is not None:
+        userId = userId.strip('"')
+    else:
+         return jsonify({"success": False, "response": "Missing userId"}), 400
     print('req userId: ', userId, file=sys.stderr)
     # Check if user exists
-    user = User.query.filter_by(userId=userId).first()
-    if user is None:
+    userValid = User.query.filter_by(userId=userId).first()
+    if userValid is None:
+        print('user not found', file=sys.stderr)
         return jsonify({"success": False, "response": "User not found"}), 404
     itemsB = Item.query.all()
     items = Item.query.filter_by(userId=userId).all()
@@ -92,11 +100,16 @@ def get_items():
 @app.route('/itemsP', methods=['POST'])
 def add_item():
     try:
-        userId = request.json.get('userId').strip('"')
+        userId = request.json.get('userId')
+        if userId is not None:
+            userId = userId.strip('"')
+        else:
+            return jsonify({"success": False, "response": "Missing userId"}), 400
         print('new: ', userId, file=sys.stderr)
         # Check if user exists
-        user = User.query.filter_by(userId=userId).first()
-        if user is None:
+        userValid = User.query.filter_by(userId=userId).first()
+        if userValid is None:
+            print('user not found', file=sys.stderr)
             return jsonify({"success": False, "response": "User not found"}), 404
         site = request.json.get('site')
         url = request.json.get('url')
@@ -117,10 +130,15 @@ def add_item():
 @app.route('/itemsD', methods=['POST'])
 def remove_item():
     try:
-        userId = request.json.get('user')
+        userId = request.json.get('userId')
+        if userId is not None:
+            userId = userId.strip('"')
+        else:
+            return jsonify({"success": False, "response": "Missing userId"}), 400
         # Check if user exists
-        user = User.query.filter_by(userId=userId).first()
-        if user is None:
+        userValid = User.query.filter_by(userId=userId).first()
+        if userValid is None:
+            print('user not found', file=sys.stderr)
             return jsonify({"success": False, "response": "User not found"}), 404
         site = request.json.get('site')
         if not site:
@@ -139,10 +157,15 @@ def remove_item():
 @app.route('/itemsU', methods=['POST'])
 def update_item():
     try:
-        userId = request.json.get('userId').strip('"')
+        userId = request.json.get('userId')
+        if userId is not None:
+            userId = userId.strip('"')
+        else:
+            return jsonify({"success": False, "response": "Missing userId"}), 400
         # Check if user exists
-        user = User.query.filter_by(userId=userId).first()
-        if user is None:
+        userValid = User.query.filter_by(userId=userId).first()
+        if userValid is None:
+            print('user not found', file=sys.stderr)
             return jsonify({"success": False, "response": "User not found"}), 404
         _id = request.json.get('id')
         site = request.json.get('site')
